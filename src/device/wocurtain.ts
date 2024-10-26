@@ -54,13 +54,17 @@ export class WoCurtain extends SwitchbotDevice {
 
     const model = serviceData.subarray(0, 1).toString('utf8') as string ? SwitchBotBLEModel.Curtain : SwitchBotBLEModel.Curtain3
     const calibration = Boolean(byte1 & 0b01000000)
-    const position = Math.max(Math.min(deviceData.readUInt8(0) & 0b01111111, 100), 0)
-    const inMotion = Boolean(deviceData.readUInt8(0) & 0b10000000)
-    const lightLevel = (deviceData.readUInt8(1) >> 4) & 0b00001111
-    const deviceChain = deviceData.readUInt8(1) & 0b00000111
-    const battery = batteryData !== null ? batteryData & 0b01111111 : null
 
     if (model === SwitchBotBLEModel.Curtain) {
+      const byte3 = serviceData.readUInt8(3)
+      const byte4 = serviceData.readUInt8(4)
+
+      const position = byte3 & 0b01111111
+      const inMotion = Boolean(byte3 & 0b10000000)
+      const lightLevel = (byte4 >> 4) & 0b00001111
+      const deviceChain = byte4 & 0b00000111
+      const battery = byte2 & 0b01111111
+
       const data: curtainServiceData = {
         model: SwitchBotBLEModel.Curtain,
         modelName: SwitchBotBLEModelName.Curtain,
@@ -74,6 +78,12 @@ export class WoCurtain extends SwitchbotDevice {
       }
       return data
     } else {
+      const position = Math.max(Math.min(deviceData.readUInt8(0) & 0b01111111, 100), 0)
+      const inMotion = Boolean(deviceData.readUInt8(0) & 0b10000000)
+      const lightLevel = (deviceData.readUInt8(1) >> 4) & 0b00001111
+      const deviceChain = deviceData.readUInt8(1) & 0b00000111
+      const battery = batteryData !== null ? batteryData & 0b01111111 : null
+
       const data: curtain3ServiceData = {
         model: SwitchBotBLEModel.Curtain3,
         modelName: SwitchBotBLEModelName.Curtain3,
