@@ -2,9 +2,10 @@
 
 All notable changes to this project will be documented in this file. This project uses [Semantic Versioning](https://semver.org/)
 
-## [3.2.2](https://github.com/OpenWonderLabs/node-switchbot/releases/tag/v3.2.2) (2024-10-XX)
+## [3.3.0](https://github.com/OpenWonderLabs/node-switchbot/releases/tag/v3.3.0) (2024-10-30)
 
 ### What's Changed
+- Add Water Leak Decector Support
 - Fix timeout error handling [#268](https://github.com/OpenWonderLabs/node-switchbot/pull/268), Thanks [@dnicolson](https://github.com/dnicolson)
 - Fix characteristic notification [#267](https://github.com/OpenWonderLabs/node-switchbot/pull/267), Thanks [@dnicolson](https://github.com/dnicolson)
 - Change scanning log level [#266](https://github.com/OpenWonderLabs/node-switchbot/pull/266), Thanks [@dnicolson](https://github.com/dnicolson)

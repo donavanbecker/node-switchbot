@@ -113,6 +113,7 @@ export enum SwitchBotBLEModel {
   CeilingLight = 'q', // Currently only available in Japan.
   CeilingLightPro = 'n', // Currently only available in Japan.
   BlindTilt = 'x',
+  Leak = '3',
   Unknown = 'Unknown',
 }
 
@@ -137,6 +138,7 @@ export enum SwitchBotBLEModelName {
   BlindTilt = 'WoBlindTilt',
   CeilingLight = 'WoCeilingLight',
   CeilingLightPro = 'WoCeilingLightPro',
+  Leak = 'WoLeakDetector',
   Unknown = 'Unknown',
 }
 
@@ -161,6 +163,7 @@ export enum SwitchBotBLEModelFriendlyName {
   BlindTilt = 'Blind Tilt',
   CeilingLight = 'Ceiling Light',
   CeilingLightPro = 'Ceiling Light Pro',
+  Leak = 'Water Detector',
   Unknown = 'Unknown',
 }
 

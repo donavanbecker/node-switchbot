@@ -17,6 +17,7 @@ import { WoHand } from './device/wohand.js'
 import { WoHub2 } from './device/wohub2.js'
 import { WoHumi } from './device/wohumi.js'
 import { WoIOSensorTH } from './device/woiosensorth.js'
+import { WoLeak } from './device/woleak.js'
 import { WoPlugMiniUS } from './device/woplugmini.js'
 import { WoPlugMiniJP } from './device/woplugmini_jp.js'
 import { WoPresence } from './device/wopresence.js'
@@ -152,6 +153,8 @@ export class Advertising {
         return WoSmartLockPro.parseServiceData(serviceData, manufacturerData, emitLog)
       case SwitchBotBLEModel.BlindTilt:
         return WoBlindTilt.parseServiceData(serviceData, manufacturerData, emitLog)
+      case SwitchBotBLEModel.Leak:
+        return WoLeak.parseServiceData(serviceData, manufacturerData, emitLog)
       default:
         emitLog('debug', `[parseAdvertising.${model}] return null, model "${model}" not available!`)
         return null

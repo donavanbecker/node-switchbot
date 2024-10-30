@@ -17,6 +17,7 @@ import { WoHand } from './device/wohand.js'
 import { WoHub2 } from './device/wohub2.js'
 import { WoHumi } from './device/wohumi.js'
 import { WoIOSensorTH } from './device/woiosensorth.js'
+import { WoLeak } from './device/woleak.js'
 import { WoPlugMiniUS } from './device/woplugmini.js'
 import { WoPlugMiniJP } from './device/woplugmini_jp.js'
 import { WoPresence } from './device/wopresence.js'
@@ -224,6 +225,7 @@ export class SwitchBotBLE extends EventEmitter {
         case SwitchBotBLEModel.CeilingLight:
         case SwitchBotBLEModel.CeilingLightPro: return new WoCeilingLight(peripheral, this.noble)
         case SwitchBotBLEModel.StripLight: return new WoStrip(peripheral, this.noble)
+        case SwitchBotBLEModel.Leak: return new WoLeak(peripheral, this.noble)
         case SwitchBotBLEModel.PlugMiniUS: return new WoPlugMiniUS(peripheral, this.noble)
         case SwitchBotBLEModel.PlugMiniJP: return new WoPlugMiniJP(peripheral, this.noble)
         case SwitchBotBLEModel.Lock: return new WoSmartLock(peripheral, this.noble)

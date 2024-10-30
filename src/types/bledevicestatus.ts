@@ -292,12 +292,13 @@ export type batteryCirculatorFanServiceData = serviceData & {
 }
 
 export type waterLeakDetectorServiceData = serviceData & {
-  model: SwitchBotBLEModel.Unknown
-  modelName: SwitchBotBLEModelName.Unknown
-  modelFriendlyName: SwitchBotBLEModelFriendlyName.Unknown
-  state: boolean
-  status: number
-  battery: number
+  model: SwitchBotBLEModel.Leak
+  modelName: SwitchBotBLEModelName.Leak
+  modelFriendlyName: SwitchBotBLEModelFriendlyName.Leak
+  water_leak_detected: boolean
+  device_tampered: boolean
+  battery_level: number
+  low_battery: boolean
 }
 
 export type humidifierServiceData = serviceData & {
