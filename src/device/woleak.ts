@@ -54,9 +54,9 @@ export class WoLeak extends SwitchbotDevice {
       model: SwitchBotBLEModel.Leak,
       modelName: SwitchBotBLEModelName.Leak,
       modelFriendlyName: SwitchBotBLEModelFriendlyName.Leak,
-      water_leak_detected: waterLeakDetected,
-      device_tampered: deviceTampered,
-      battery_level: batteryLevel,
+      leak: waterLeakDetected,
+      tampered: deviceTampered,
+      battery: batteryLevel,
       low_battery: lowBattery,
     }
 

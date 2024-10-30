@@ -295,9 +295,9 @@ export type waterLeakDetectorServiceData = serviceData & {
   model: SwitchBotBLEModel.Leak
   modelName: SwitchBotBLEModelName.Leak
   modelFriendlyName: SwitchBotBLEModelFriendlyName.Leak
-  water_leak_detected: boolean
-  device_tampered: boolean
-  battery_level: number
+  leak: boolean
+  tampered: boolean
+  battery: number
   low_battery: boolean
 }
 

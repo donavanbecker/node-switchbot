@@ -32,9 +32,9 @@ describe('woLeak', () => {
         model: SwitchBotBLEModel.Leak,
         modelName: SwitchBotBLEModelName.Leak,
         modelFriendlyName: SwitchBotBLEModelFriendlyName.Leak,
-        water_leak_detected: true,
-        device_tampered: true,
-        battery_level: 5,
+        leak: true,
+        tampered: true,
+        battery: 5,
         low_battery: true,
       }
 
@@ -48,9 +48,9 @@ describe('woLeak', () => {
         model: SwitchBotBLEModel.Leak,
         modelName: SwitchBotBLEModelName.Leak,
         modelFriendlyName: SwitchBotBLEModelFriendlyName.Leak,
-        water_leak_detected: false,
-        device_tampered: false,
-        battery_level: 0,
+        leak: false,
+        tampered: false,
+        battery: 0,
         low_battery: false,
       }
 
