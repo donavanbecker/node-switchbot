@@ -27,7 +27,7 @@ export class WoStrip extends SwitchbotDevice {
   ): Promise<stripLightServiceData | null> {
     if (serviceData.length !== 18) {
       emitLog('debugerror', `[parseServiceDataForWoStrip] Buffer length ${serviceData.length} !== 18!`)
-      return null
+      // return null
     }
 
     const [byte3, byte4, byte5, byte7, byte8, byte9, byte10] = [

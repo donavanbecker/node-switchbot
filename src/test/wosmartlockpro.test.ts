@@ -27,7 +27,7 @@ describe('woSmartLockPro', () => {
       const emitLog = vi.fn()
       const result = await WoSmartLockPro.parseServiceData(serviceData, manufacturerData, emitLog)
       expect(result).toBeNull()
-      expect(emitLog).toHaveBeenCalledWith('error', '[parseServiceDataForWoStrip] Buffer length 10 !== 18!')
+      expect(emitLog).toHaveBeenCalledWith('error', '[parseServiceDataForWoLockPro] Buffer length 10 !== 18!')
     })
 
     it('should parse valid service data correctly', async () => {
