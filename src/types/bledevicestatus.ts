@@ -318,3 +318,13 @@ export type robotVacuumCleanerServiceData = serviceData & {
   state: string
   battery: number
 }
+
+export type keypadDetectorServiceData = serviceData & {
+  model: SwitchBotBLEModel.Keypad
+  modelName: SwitchBotBLEModelName.Keypad
+  modelFriendlyName: SwitchBotBLEModelFriendlyName.Keypad
+  event: boolean
+  tampered: boolean
+  battery: number
+  low_battery: boolean
+}

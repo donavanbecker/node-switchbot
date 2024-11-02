@@ -17,6 +17,7 @@ import { WoHand } from './device/wohand.js'
 import { WoHub2 } from './device/wohub2.js'
 import { WoHumi } from './device/wohumi.js'
 import { WoIOSensorTH } from './device/woiosensorth.js'
+import { WoKeypad } from './device/wokeypad.js'
 import { WoLeak } from './device/woleak.js'
 import { WoPlugMiniUS } from './device/woplugmini.js'
 import { WoPlugMiniJP } from './device/woplugmini_jp.js'
@@ -231,6 +232,7 @@ export class SwitchBotBLE extends EventEmitter {
         case SwitchBotBLEModel.Lock: return new WoSmartLock(peripheral, this.noble)
         case SwitchBotBLEModel.LockPro: return new WoSmartLockPro(peripheral, this.noble)
         case SwitchBotBLEModel.BlindTilt: return new WoBlindTilt(peripheral, this.noble)
+        case SwitchBotBLEModel.Keypad: return new WoKeypad(peripheral, this.noble)
         default: return new SwitchbotDevice(peripheral, this.noble)
       }
     }
