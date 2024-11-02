@@ -6,7 +6,13 @@ import type { Buffer } from 'node:buffer'
 
 import type * as Noble from '@stoprocent/noble'
 
+import type { SwitchbotDevice } from '../device.js'
+import type { batteryCirculatorFanServiceData, blindTiltServiceData, botServiceData, ceilingLightProServiceData, ceilingLightServiceData, colorBulbServiceData, contactSensorServiceData, curtain3ServiceData, curtainServiceData, hub2ServiceData, humidifierServiceData, keypadDetectorServiceData, lockProServiceData, lockServiceData, meterPlusServiceData, meterProCO2ServiceData, meterProServiceData, meterServiceData, motionSensorServiceData, outdoorMeterServiceData, plugMiniJPServiceData, plugMiniUSServiceData, robotVacuumCleanerServiceData, stripLightServiceData, waterLeakDetectorServiceData } from '../index.js'
+
 export type MacAddress = string
+
+export type ondiscover = (device: SwitchbotDevice) => Promise<void> | void
+export type onadvertisement = (ad: ad) => Promise<void> | void
 
 interface DeviceInfo {
   Model: SwitchBotModel
@@ -23,6 +29,7 @@ export declare interface SwitchBotBLEDevice {
   Meter: DeviceInfo
   MeterPlus: DeviceInfo
   MeterPro: DeviceInfo
+  MeterProCO2: DeviceInfo
   Hub2: DeviceInfo
   OutdoorMeter: DeviceInfo
   MotionSensor: DeviceInfo
@@ -92,6 +99,7 @@ export enum SwitchBotBLEModel {
   Meter = 'T',
   MeterPlus = 'i',
   MeterPro = '4',
+  MeterProCO2 = '5',
   Hub2 = 'v',
   OutdoorMeter = 'w',
   MotionSensor = 's',
@@ -99,12 +107,14 @@ export enum SwitchBotBLEModel {
   ColorBulb = 'u',
   StripLight = 'r',
   PlugMiniUS = 'g',
-  PlugMiniJP = 'j',
+  PlugMiniJP = 'j', // Only available in Japan.
   Lock = 'o',
   LockPro = '$',
   CeilingLight = 'q', // Currently only available in Japan.
   CeilingLightPro = 'n', // Currently only available in Japan.
   BlindTilt = 'x',
+  Leak = '3',
+  Keypad = 'y',
   Unknown = 'Unknown',
 }
 
@@ -118,6 +128,7 @@ export enum SwitchBotBLEModelName {
   Meter = 'WoSensorTH',
   MeterPlus = 'WoSensorTHPlus',
   MeterPro = 'WoSensorTHP',
+  MeterProCO2 = 'WoSensorTHPc',
   Lock = 'WoSmartLock',
   LockPro = 'WoSmartLockPro',
   PlugMini = 'WoPlugMini',
@@ -128,6 +139,8 @@ export enum SwitchBotBLEModelName {
   BlindTilt = 'WoBlindTilt',
   CeilingLight = 'WoCeilingLight',
   CeilingLightPro = 'WoCeilingLightPro',
+  Leak = 'WoLeakDetector',
+  Keypad = 'WoKeypad',
   Unknown = 'Unknown',
 }
 
@@ -145,12 +158,15 @@ export enum SwitchBotBLEModelFriendlyName {
   StripLight = 'Strip Light',
   MeterPlus = 'Meter Plus',
   MeterPro = 'Meter Pro',
+  MeterProCO2 = 'Meter Pro CO2',
   OutdoorMeter = 'Outdoor Meter',
   ContactSensor = 'Contact Sensor',
   MotionSensor = 'Motion Sensor',
   BlindTilt = 'Blind Tilt',
   CeilingLight = 'Ceiling Light',
   CeilingLightPro = 'Ceiling Light Pro',
+  Leak = 'Water Detector',
+  Keypad = 'Keypad',
   Unknown = 'Unknown',
 }
 
@@ -184,11 +200,11 @@ export interface ServiceData {
   [key: string]: unknown
 }
 
-export interface Ad {
+export interface ad {
   id: string
   address: string
   rssi: number
-  serviceData: ServiceData
+  serviceData: botServiceData | colorBulbServiceData | contactSensorServiceData | curtainServiceData | curtain3ServiceData | stripLightServiceData | lockServiceData | lockProServiceData | meterServiceData | meterPlusServiceData | meterProServiceData | meterProCO2ServiceData | motionSensorServiceData | outdoorMeterServiceData | plugMiniUSServiceData | plugMiniJPServiceData | blindTiltServiceData | ceilingLightServiceData | ceilingLightProServiceData | hub2ServiceData | batteryCirculatorFanServiceData | waterLeakDetectorServiceData | humidifierServiceData | robotVacuumCleanerServiceData | keypadDetectorServiceData
   [key: string]: unknown
 }
 

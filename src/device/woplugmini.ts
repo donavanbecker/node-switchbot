@@ -2,7 +2,7 @@
  *
  * woplugmini.ts: Switchbot BLE API registration.
  */
-import type { plugMiniJPServiceData, plugMiniUSServiceData } from '../types/bledevicestatus.js'
+import type { plugMiniUSServiceData } from '../types/bledevicestatus.js'
 import type { NobleTypes } from '../types/types.js'
 
 import { Buffer } from 'node:buffer'
@@ -14,45 +14,21 @@ import { SwitchBotBLEModel, SwitchBotBLEModelFriendlyName, SwitchBotBLEModelName
  * Class representing a WoPlugMini device.
  * @see https://github.com/OpenWonderLabs/SwitchBotAPI-BLE/blob/latest/devicetypes/plugmini.md
  */
-export class WoPlugMini extends SwitchbotDevice {
+export class WoPlugMiniUS extends SwitchbotDevice {
+  constructor(peripheral: NobleTypes['peripheral'], noble: NobleTypes['noble']) {
+    super(peripheral, noble)
+  }
+
   /**
    * Parses the service data for WoPlugMini US.
    * @param {Buffer} manufacturerData - The manufacturer data buffer.
    * @param {Function} emitLog - The function to emit log messages.
    * @returns {Promise<plugMiniUSServiceData | null>} - Parsed service data or null if invalid.
    */
-  static async parseServiceData_US(
+  static async parseServiceData(
     manufacturerData: Buffer,
     emitLog: (level: string, message: string) => void,
   ): Promise<plugMiniUSServiceData | null> {
-    return this.parseServiceData(manufacturerData, SwitchBotBLEModel.PlugMiniUS, emitLog) as Promise<plugMiniUSServiceData | null>
-  }
-
-  /**
-   * Parses the service data for WoPlugMini JP.
-   * @param {Buffer} manufacturerData - The manufacturer data buffer.
-   * @param {Function} emitLog - The function to emit log messages.
-   * @returns {Promise<plugMiniJPServiceData | null>} - Parsed service data or null if invalid.
-   */
-  static async parseServiceData_JP(
-    manufacturerData: Buffer,
-    emitLog: (level: string, message: string) => void,
-  ): Promise<plugMiniJPServiceData | null> {
-    return this.parseServiceData(manufacturerData, SwitchBotBLEModel.PlugMiniJP, emitLog) as Promise<plugMiniJPServiceData | null>
-  }
-
-  /**
-   * Parses the service data for WoPlugMini.
-   * @param {Buffer} manufacturerData - The manufacturer data buffer.
-   * @param {SwitchBotBLEModel} model - The model of the plug mini.
-   * @param {Function} emitLog - The function to emit log messages.
-   * @returns {Promise<plugMiniUSServiceData | plugMiniJPServiceData | null>} - Parsed service data or null if invalid.
-   */
-  private static async parseServiceData(
-    manufacturerData: Buffer,
-    model: SwitchBotBLEModel,
-    emitLog: (level: string, message: string) => void,
-  ): Promise<plugMiniUSServiceData | plugMiniJPServiceData | null> {
     if (manufacturerData.length !== 14) {
       emitLog('debugerror', `[parseServiceDataForWoPlugMini] Buffer length ${manufacturerData.length} should be 14`)
       return null
@@ -75,7 +51,7 @@ export class WoPlugMini extends SwitchbotDevice {
     const currentPower = (((byte12 & 0b01111111) << 8) + byte13) / 10 // in watt
 
     const data = {
-      model: model === SwitchBotBLEModel.PlugMiniUS ? SwitchBotBLEModel.PlugMiniUS : SwitchBotBLEModel.PlugMiniJP,
+      model: SwitchBotBLEModel.PlugMiniUS,
       modelName: SwitchBotBLEModelName.PlugMini,
       modelFriendlyName: SwitchBotBLEModelFriendlyName.PlugMini,
       state: state ?? 'unknown',
@@ -87,11 +63,7 @@ export class WoPlugMini extends SwitchbotDevice {
       currentPower,
     }
 
-    return data as plugMiniUSServiceData | plugMiniJPServiceData
-  }
-
-  constructor(peripheral: NobleTypes['peripheral'], noble: NobleTypes['noble']) {
-    super(peripheral, noble)
+    return data as plugMiniUSServiceData
   }
 
   /**

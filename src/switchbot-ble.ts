@@ -2,7 +2,7 @@
  *
  * switchbot.ts: Switchbot BLE API registration.
  */
-import type { Ad, NobleTypes, Params, Rule } from './types/types.js'
+import type { ad, NobleTypes, onadvertisement, ondiscover, Params, Rule } from './types/types.js'
 
 import { EventEmitter } from 'node:events'
 
@@ -17,9 +17,15 @@ import { WoHand } from './device/wohand.js'
 import { WoHub2 } from './device/wohub2.js'
 import { WoHumi } from './device/wohumi.js'
 import { WoIOSensorTH } from './device/woiosensorth.js'
-import { WoPlugMini } from './device/woplugmini.js'
+import { WoKeypad } from './device/wokeypad.js'
+import { WoLeak } from './device/woleak.js'
+import { WoPlugMiniUS } from './device/woplugmini.js'
+import { WoPlugMiniJP } from './device/woplugmini_jp.js'
 import { WoPresence } from './device/wopresence.js'
 import { WoSensorTH } from './device/wosensorth.js'
+import { WoSensorTHPlus } from './device/wosensorthplus.js'
+import { WoSensorTHPro } from './device/wosensorthpro.js'
+import { WoSensorTHProCO2 } from './device/wosensorthproco2.js'
 import { WoSmartLock } from './device/wosmartlock.js'
 import { WoSmartLockPro } from './device/wosmartlockpro.js'
 import { WoStrip } from './device/wostrip.js'
@@ -33,8 +39,8 @@ import { SwitchBotBLEModel } from './types/types.js'
 export class SwitchBotBLE extends EventEmitter {
   public ready: Promise<void>
   public noble: any
-  ondiscover?: (device: SwitchbotDevice) => Promise<void> | void
-  onadvertisement?: (ad: Ad) => Promise<void> | void
+  ondiscover?: ondiscover
+  onadvertisement?: onadvertisement
 
   /**
    * Constructor
@@ -144,7 +150,7 @@ export class SwitchBotBLE extends EventEmitter {
 
     const p = {
       duration: params.duration ?? DEFAULT_DISCOVERY_DURATION,
-      model: params.model ?? '',
+      model: params.model as SwitchBotBLEModel ?? '',
       id: params.id ?? '',
       quick: !!params.quick,
     }
@@ -160,7 +166,7 @@ export class SwitchBotBLE extends EventEmitter {
         this.noble.removeAllListeners('discover')
         try {
           await this.noble.stopScanningAsync()
-          this.log('info', 'Stopped Scanning for SwitchBot BLE devices.')
+          this.log('debug', 'Stopped Scanning for SwitchBot BLE devices.')
         } catch (e: any) {
           this.log('error', `discover stopScanningAsync error: ${JSON.stringify(e.message ?? e)}`)
         }
@@ -170,7 +176,7 @@ export class SwitchBotBLE extends EventEmitter {
 
     return new Promise<SwitchbotDevice[]>((resolve, reject) => {
       this.noble.on('discover', async (peripheral: NobleTypes['peripheral']) => {
-        const device = await this.createDevice(peripheral, p.id, p.model)
+        const device = await this.createDevice(peripheral, p.id, p.model as SwitchBotBLEModel)
         if (!device) {
           return
         }
@@ -200,7 +206,7 @@ export class SwitchBotBLE extends EventEmitter {
    * @param {string} model - The device model.
    * @returns {Promise<SwitchbotDevice | null>} - The device object or null.
    */
-  private async createDevice(peripheral: NobleTypes['peripheral'], id: string, model: string): Promise<SwitchbotDevice | null> {
+  private async createDevice(peripheral: NobleTypes['peripheral'], id: ad['id'], model: SwitchBotBLEModel): Promise<SwitchbotDevice | null> {
     const ad = await Advertising.parse(peripheral, this.log.bind(this))
     if (ad && await this.filterAd(ad, id, model) && this.noble) {
       switch (ad.serviceData.model) {
@@ -208,8 +214,10 @@ export class SwitchBotBLE extends EventEmitter {
         case SwitchBotBLEModel.Curtain:
         case SwitchBotBLEModel.Curtain3: return new WoCurtain(peripheral, this.noble)
         case SwitchBotBLEModel.Humidifier: return new WoHumi(peripheral, this.noble)
-        case SwitchBotBLEModel.Meter:
-        case SwitchBotBLEModel.MeterPlus: return new WoSensorTH(peripheral, this.noble)
+        case SwitchBotBLEModel.Meter: return new WoSensorTH(peripheral, this.noble)
+        case SwitchBotBLEModel.MeterPlus: return new WoSensorTHPlus(peripheral, this.noble)
+        case SwitchBotBLEModel.MeterPro: return new WoSensorTHPro(peripheral, this.noble)
+        case SwitchBotBLEModel.MeterProCO2: return new WoSensorTHProCO2(peripheral, this.noble)
         case SwitchBotBLEModel.Hub2: return new WoHub2(peripheral, this.noble)
         case SwitchBotBLEModel.OutdoorMeter: return new WoIOSensorTH(peripheral, this.noble)
         case SwitchBotBLEModel.MotionSensor: return new WoPresence(peripheral, this.noble)
@@ -218,11 +226,13 @@ export class SwitchBotBLE extends EventEmitter {
         case SwitchBotBLEModel.CeilingLight:
         case SwitchBotBLEModel.CeilingLightPro: return new WoCeilingLight(peripheral, this.noble)
         case SwitchBotBLEModel.StripLight: return new WoStrip(peripheral, this.noble)
-        case SwitchBotBLEModel.PlugMiniUS:
-        case SwitchBotBLEModel.PlugMiniJP: return new WoPlugMini(peripheral, this.noble)
+        case SwitchBotBLEModel.Leak: return new WoLeak(peripheral, this.noble)
+        case SwitchBotBLEModel.PlugMiniUS: return new WoPlugMiniUS(peripheral, this.noble)
+        case SwitchBotBLEModel.PlugMiniJP: return new WoPlugMiniJP(peripheral, this.noble)
         case SwitchBotBLEModel.Lock: return new WoSmartLock(peripheral, this.noble)
         case SwitchBotBLEModel.LockPro: return new WoSmartLockPro(peripheral, this.noble)
         case SwitchBotBLEModel.BlindTilt: return new WoBlindTilt(peripheral, this.noble)
+        case SwitchBotBLEModel.Keypad: return new WoKeypad(peripheral, this.noble)
         default: return new SwitchbotDevice(peripheral, this.noble)
       }
     }
@@ -237,7 +247,7 @@ export class SwitchBotBLE extends EventEmitter {
    * @param {string} model - The device model.
    * @returns {Promise<boolean>} - True if the advertising data matches the id and model, false otherwise.
    */
-  private async filterAd(ad: Ad, id: string, model: string): Promise<boolean> {
+  private async filterAd(ad: ad, id: string, model: string): Promise<boolean> {
     if (!ad) {
       return false
     }
@@ -282,7 +292,7 @@ export class SwitchBotBLE extends EventEmitter {
 
     try {
       await this.noble.startScanningAsync(PRIMARY_SERVICE_UUID_LIST, true)
-      this.log('info', 'Started Scanning for SwitchBot BLE devices.')
+      this.log('debug', 'Started Scanning for SwitchBot BLE devices.')
     } catch (e: any) {
       this.log('error', `startScanningAsync error: ${JSON.stringify(e.message ?? e)}`)
     }
@@ -301,7 +311,7 @@ export class SwitchBotBLE extends EventEmitter {
     this.noble.removeAllListeners('discover')
     try {
       await this.noble.stopScanningAsync()
-      this.log('info', 'Stopped Scanning for SwitchBot BLE devices.')
+      this.log('debug', 'Stopped Scanning for SwitchBot BLE devices.')
     } catch (e: any) {
       this.log('error', `stopScanningAsync error: ${JSON.stringify(e.message ?? e)}`)
     }

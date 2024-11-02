@@ -9,13 +9,6 @@ export interface switchbot {
   wait: (arg0: number) => any
 }
 
-export interface ad {
-  id: string
-  address: string
-  rssi: number
-  serviceData: botServiceData | colorBulbServiceData | contactSensorServiceData | curtainServiceData | curtain3ServiceData | stripLightServiceData | lockServiceData | lockProServiceData | meterServiceData | meterPlusServiceData | meterProServiceData | motionSensorServiceData | outdoorMeterServiceData | plugMiniUSServiceData | plugMiniJPServiceData | blindTiltServiceData | ceilingLightServiceData | ceilingLightProServiceData | hub2ServiceData | batteryCirculatorFanServiceData | waterLeakDetectorServiceData | humidifierServiceData | robotVacuumCleanerServiceData
-}
-
 interface serviceData {
   model: SwitchBotBLEModel
   modelName: SwitchBotBLEModelName
@@ -169,6 +162,17 @@ export type meterProServiceData = serviceData & {
   battery: number
 }
 
+export type meterProCO2ServiceData = serviceData & {
+  model: SwitchBotBLEModel.MeterProCO2
+  modelName: SwitchBotBLEModelName.MeterProCO2
+  modelFriendlyName: SwitchBotBLEModelFriendlyName.MeterProCO2
+  celsius: number
+  fahrenheit: number
+  fahrenheit_mode: boolean
+  humidity: number
+  battery: number
+}
+
 export type outdoorMeterServiceData = serviceData & {
   model: SwitchBotBLEModel.OutdoorMeter
   modelName: SwitchBotBLEModelName.OutdoorMeter
@@ -208,7 +212,7 @@ export type plugMiniUSServiceData = serviceData & {
 }
 
 export type plugMiniJPServiceData = serviceData & {
-  model: SwitchBotBLEModel.PlugMiniUS
+  model: SwitchBotBLEModel.PlugMiniJP
   modelName: SwitchBotBLEModelName.PlugMini
   modelFriendlyName: SwitchBotBLEModelFriendlyName.PlugMini
   state: string
@@ -288,12 +292,13 @@ export type batteryCirculatorFanServiceData = serviceData & {
 }
 
 export type waterLeakDetectorServiceData = serviceData & {
-  model: SwitchBotBLEModel.Unknown
-  modelName: SwitchBotBLEModelName.Unknown
-  modelFriendlyName: SwitchBotBLEModelFriendlyName.Unknown
-  state: boolean
-  status: number
+  model: SwitchBotBLEModel.Leak
+  modelName: SwitchBotBLEModelName.Leak
+  modelFriendlyName: SwitchBotBLEModelFriendlyName.Leak
+  leak: boolean
+  tampered: boolean
   battery: number
+  low_battery: boolean
 }
 
 export type humidifierServiceData = serviceData & {
@@ -312,4 +317,14 @@ export type robotVacuumCleanerServiceData = serviceData & {
   modelFriendlyName: SwitchBotBLEModelFriendlyName.Unknown
   state: string
   battery: number
+}
+
+export type keypadDetectorServiceData = serviceData & {
+  model: SwitchBotBLEModel.Keypad
+  modelName: SwitchBotBLEModelName.Keypad
+  modelFriendlyName: SwitchBotBLEModelFriendlyName.Keypad
+  event: boolean
+  tampered: boolean
+  battery: number
+  low_battery: boolean
 }
