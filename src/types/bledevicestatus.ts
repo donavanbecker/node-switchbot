@@ -171,6 +171,7 @@ export type meterProCO2ServiceData = serviceData & {
   fahrenheit_mode: boolean
   humidity: number
   battery: number
+  co2: number
 }
 
 export type outdoorMeterServiceData = serviceData & {

@@ -109,6 +109,13 @@ export type meterProWebhookContext = deviceWebhookContext & {
   humidity: number
 }
 
+export type meterProCO2WebhookContext = deviceWebhookContext & {
+  temperature: number
+  scale: 'CELSIUS' | 'FAHRENHEIT'
+  humidity: number
+  co2: number
+}
+
 export type outdoorMeterWebhookContext = deviceWebhookContext & {
   temperature: number
   scale: 'CELSIUS' | 'FAHRENHEIT'
