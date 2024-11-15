@@ -44,7 +44,7 @@ export class WoBlindTilt extends SwitchbotDevice {
     const lightLevel = (byte6.readUInt8(1) >> 4) & 0b00001111
     const calibration = !!(byte6.readUInt8(1) & 0b00000001)
     const sequenceNumber = byte6.readUInt8(0)
-    const battery = serviceData.length > 2 ? byte2 & 0b01111111 : null
+    const battery = serviceData.length > 2 ? byte2 & 0b01111111 : 0
 
     const data: blindTiltServiceData = {
       model: SwitchBotBLEModel.BlindTilt,

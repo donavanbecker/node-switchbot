@@ -82,14 +82,14 @@ export class WoCurtain extends SwitchbotDevice {
       const inMotion = Boolean(deviceData.readUInt8(0) & 0b10000000)
       const lightLevel = (deviceData.readUInt8(1) >> 4) & 0b00001111
       const deviceChain = deviceData.readUInt8(1) & 0b00000111
-      const battery = batteryData !== null ? batteryData & 0b01111111 : null
+      const battery = batteryData !== null ? batteryData & 0b01111111 : 0
 
       const data: curtain3ServiceData = {
         model: SwitchBotBLEModel.Curtain3,
         modelName: SwitchBotBLEModelName.Curtain3,
         modelFriendlyName: SwitchBotBLEModelFriendlyName.Curtain3,
         calibration,
-        battery: battery ?? 0,
+        battery,
         inMotion,
         position: reverse ? 100 - position : position,
         lightLevel,

@@ -230,7 +230,7 @@ export type blindTiltServiceData = serviceData & {
   modelName: SwitchBotBLEModelName.BlindTilt
   modelFriendlyName: SwitchBotBLEModelFriendlyName.BlindTilt
   calibration: boolean
-  battery: number | null
+  battery: number
   inMotion: boolean
   tilt: number
   lightLevel: number
