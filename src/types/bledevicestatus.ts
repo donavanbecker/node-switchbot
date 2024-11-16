@@ -329,3 +329,24 @@ export type keypadDetectorServiceData = serviceData & {
   battery: number
   low_battery: boolean
 }
+
+export type relaySwitch1PMServiceData = serviceData & {
+  model: SwitchBotBLEModel.RelaySwitch1PM
+  modelName: SwitchBotBLEModelName.RelaySwitch1PM
+  modelFriendlyName: SwitchBotBLEModelFriendlyName.RelaySwitch1PM
+  mode: boolean
+  state: boolean
+  sequence_number: number
+  power: number
+  voltage: number
+  current: number
+}
+
+export type relaySwitch1PlusServiceData = serviceData & {
+  model: SwitchBotBLEModel.RelaySwitch1Plus
+  modelName: SwitchBotBLEModelName.RelaySwitch1Plus
+  modelFriendlyName: SwitchBotBLEModelFriendlyName.RelaySwitch1Plus
+  mode: boolean
+  state: boolean
+  sequence_number: number
+}
