@@ -173,7 +173,11 @@ export class SwitchBotBLE extends EventEmitter {
           this.log('error', `discover stopScanningAsync error: ${JSON.stringify(e.message ?? e)}`)
         }
       }
-      return Object.values(peripherals)
+      const devices = Object.values(peripherals)
+      if (devices.length === 0) {
+        this.log('warn', 'No devices found during discovery.')
+      }
+      return devices
     }
 
     return new Promise<SwitchbotDevice[]>((resolve, reject) => {
@@ -194,7 +198,14 @@ export class SwitchBotBLE extends EventEmitter {
 
       this.noble.startScanningAsync(PRIMARY_SERVICE_UUID_LIST, false)
         .then(() => {
-          timer = setTimeout(async () => resolve(await finishDiscovery()), p.duration)
+          timer = setTimeout(async () => {
+            const result = await finishDiscovery()
+            if (result.length === 0) {
+              reject(new Error('No devices found during discovery.'))
+            } else {
+              resolve(result)
+            }
+          }, p.duration)
         })
         .catch(reject)
     })
