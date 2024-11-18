@@ -51,6 +51,13 @@ export type meterProStatus = deviceStatus & {
   humidity: number
 }
 
+export type meterProCO2Status = deviceStatus & {
+  temperature: number
+  battery: number
+  humidity: number
+  co2: number
+}
+
 export type outdoorMeterStatus = deviceStatus & {
   battery: number
   temperature: number

@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. This project uses [Semantic Versioning](https://semver.org/)
 
+## [3.4.0](https://github.com/OpenWonderLabs/node-switchbot/releases/tag/v3.4.0) (2024-11-18)
+
+### What's Changed
+- Add RelaySwwitch1PM and RealySwitch1PLus Devices
+- Handle no devices found [#272](https://github.com/OpenWonderLabs/node-switchbot/pull/272), Thanks [@dnicolson](https://github.com/dnicolson)
+- Housekeeping and update dependencies
+
+**Full Changelog**: https://github.com/OpenWonderLabs/node-switchbot/compare/v3.3.0...v3.4.0
+
 ## [3.3.0](https://github.com/OpenWonderLabs/node-switchbot/releases/tag/v3.3.0) (2024-11-02)
 
 ### What's Changed

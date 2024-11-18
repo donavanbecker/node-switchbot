@@ -171,6 +171,7 @@ export type meterProCO2ServiceData = serviceData & {
   fahrenheit_mode: boolean
   humidity: number
   battery: number
+  co2: number
 }
 
 export type outdoorMeterServiceData = serviceData & {
@@ -229,7 +230,7 @@ export type blindTiltServiceData = serviceData & {
   modelName: SwitchBotBLEModelName.BlindTilt
   modelFriendlyName: SwitchBotBLEModelFriendlyName.BlindTilt
   calibration: boolean
-  battery: number | null
+  battery: number
   inMotion: boolean
   tilt: number
   lightLevel: number
@@ -327,4 +328,25 @@ export type keypadDetectorServiceData = serviceData & {
   tampered: boolean
   battery: number
   low_battery: boolean
+}
+
+export type relaySwitch1PMServiceData = serviceData & {
+  model: SwitchBotBLEModel.RelaySwitch1PM
+  modelName: SwitchBotBLEModelName.RelaySwitch1PM
+  modelFriendlyName: SwitchBotBLEModelFriendlyName.RelaySwitch1PM
+  mode: boolean
+  state: boolean
+  sequence_number: number
+  power: number
+  voltage: number
+  current: number
+}
+
+export type relaySwitch1PlusServiceData = serviceData & {
+  model: SwitchBotBLEModel.RelaySwitch1Plus
+  modelName: SwitchBotBLEModelName.RelaySwitch1Plus
+  modelFriendlyName: SwitchBotBLEModelFriendlyName.RelaySwitch1Plus
+  mode: boolean
+  state: boolean
+  sequence_number: number
 }
