@@ -20,10 +20,10 @@ const COMMAND_GET_VOLTAGE_AND_CURRENT = `${COMMAND_HEADER}0f7106000000`
 // const PASSIVE_POLL_INTERVAL = 1 * 60
 
 /**
- * Class representing a WoRelaySwitch1Plus device.
+ * Class representing a WoRelaySwitch1 device.
  * @see https://github.com/OpenWonderLabs/SwitchBotAPI-BLE/
  */
-export class WoRelaySwitch1Plus extends SwitchbotDevice {
+export class WoRelaySwitch1 extends SwitchbotDevice {
   private _iv: Buffer | null = null
   private _cipher: Cipher | null = null
   private _keyId: string
@@ -48,7 +48,7 @@ export class WoRelaySwitch1Plus extends SwitchbotDevice {
   }
 
   /**
-   * Parses the service data for WoRelaySwitch1Plus.
+   * Parses the service data for WoRelaySwitch1.
    * @param {Buffer} serviceData - The service data buffer.
    * @param {Buffer} manufacturerData - The manufacturer data buffer.
    * @param {Function} emitLog - The function to emit log messages.
@@ -65,9 +65,9 @@ export class WoRelaySwitch1Plus extends SwitchbotDevice {
     }
 
     const data: relaySwitch1PlusServiceData = {
-      model: SwitchBotBLEModel.RelaySwitch1Plus,
-      modelName: SwitchBotBLEModelName.RelaySwitch1Plus,
-      modelFriendlyName: SwitchBotBLEModelFriendlyName.RelaySwitch1Plus,
+      model: SwitchBotBLEModel.RelaySwitch1,
+      modelName: SwitchBotBLEModelName.RelaySwitch1,
+      modelFriendlyName: SwitchBotBLEModelFriendlyName.RelaySwitch1,
       mode: true, // for compatibility, useless
       state: !!(manufacturerData[7] & 0b10000000),
       sequence_number: manufacturerData[6],

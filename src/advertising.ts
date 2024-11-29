@@ -21,7 +21,7 @@ import { WoLeak } from './device/woleak.js'
 import { WoPlugMiniUS } from './device/woplugmini.js'
 import { WoPlugMiniJP } from './device/woplugmini_jp.js'
 import { WoPresence } from './device/wopresence.js'
-import { WoRelaySwitch1Plus } from './device/worelayswitch1plus.js'
+import { WoRelaySwitch1 } from './device/worelayswitch1.js'
 import { WoRelaySwitch1PM } from './device/worelayswitch1pm.js'
 import { WoSensorTH } from './device/wosensorth.js'
 import { WoSensorTHPlus } from './device/wosensorthplus.js'
@@ -157,10 +157,10 @@ export class Advertising {
         return WoBlindTilt.parseServiceData(serviceData, manufacturerData, emitLog)
       case SwitchBotBLEModel.Leak:
         return WoLeak.parseServiceData(serviceData, manufacturerData, emitLog)
+      case SwitchBotBLEModel.RelaySwitch1:
+        return WoRelaySwitch1.parseServiceData(serviceData, manufacturerData, emitLog)
       case SwitchBotBLEModel.RelaySwitch1PM:
         return WoRelaySwitch1PM.parseServiceData(serviceData, manufacturerData, emitLog)
-      case SwitchBotBLEModel.RelaySwitch1Plus:
-        return WoRelaySwitch1Plus.parseServiceData(serviceData, manufacturerData, emitLog)
       default:
         emitLog('debug', `[parseAdvertising.${model}] return null, model "${model}" not available!`)
         return null

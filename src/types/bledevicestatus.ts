@@ -343,9 +343,9 @@ export type relaySwitch1PMServiceData = serviceData & {
 }
 
 export type relaySwitch1PlusServiceData = serviceData & {
-  model: SwitchBotBLEModel.RelaySwitch1Plus
-  modelName: SwitchBotBLEModelName.RelaySwitch1Plus
-  modelFriendlyName: SwitchBotBLEModelFriendlyName.RelaySwitch1Plus
+  model: SwitchBotBLEModel.RelaySwitch1
+  modelName: SwitchBotBLEModelName.RelaySwitch1
+  modelFriendlyName: SwitchBotBLEModelFriendlyName.RelaySwitch1
   mode: boolean
   state: boolean
   sequence_number: number

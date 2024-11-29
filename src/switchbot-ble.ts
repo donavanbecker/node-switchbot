@@ -22,7 +22,7 @@ import { WoLeak } from './device/woleak.js'
 import { WoPlugMiniUS } from './device/woplugmini.js'
 import { WoPlugMiniJP } from './device/woplugmini_jp.js'
 import { WoPresence } from './device/wopresence.js'
-import { WoRelaySwitch1Plus } from './device/worelayswitch1plus.js'
+import { WoRelaySwitch1 } from './device/worelayswitch1.js'
 import { WoRelaySwitch1PM } from './device/worelayswitch1pm.js'
 import { WoSensorTH } from './device/wosensorth.js'
 import { WoSensorTHPlus } from './device/wosensorthplus.js'
@@ -246,8 +246,8 @@ export class SwitchBotBLE extends EventEmitter {
         case SwitchBotBLEModel.LockPro: return new WoSmartLockPro(peripheral, this.noble)
         case SwitchBotBLEModel.BlindTilt: return new WoBlindTilt(peripheral, this.noble)
         case SwitchBotBLEModel.Keypad: return new WoKeypad(peripheral, this.noble)
+        case SwitchBotBLEModel.RelaySwitch1: return new WoRelaySwitch1(peripheral, this.noble)
         case SwitchBotBLEModel.RelaySwitch1PM: return new WoRelaySwitch1PM(peripheral, this.noble)
-        case SwitchBotBLEModel.RelaySwitch1Plus: return new WoRelaySwitch1Plus(peripheral, this.noble)
         default: return new SwitchbotDevice(peripheral, this.noble)
       }
     }

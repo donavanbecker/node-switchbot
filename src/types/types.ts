@@ -115,8 +115,8 @@ export enum SwitchBotBLEModel {
   BlindTilt = 'x',
   Leak = '3',
   Keypad = 'y',
+  RelaySwitch1 = ';',
   RelaySwitch1PM = '<',
-  RelaySwitch1Plus = ';',
   Unknown = 'Unknown',
 }
 
@@ -143,8 +143,8 @@ export enum SwitchBotBLEModelName {
   CeilingLightPro = 'WoCeilingLightPro',
   Leak = 'WoLeakDetector',
   Keypad = 'WoKeypad',
+  RelaySwitch1 = 'WoRelaySwitch1Plus',
   RelaySwitch1PM = 'WoRelaySwitch1PM',
-  RelaySwitch1Plus = 'WoRelaySwitch1Plus',
   Unknown = 'Unknown',
 }
 
@@ -171,8 +171,8 @@ export enum SwitchBotBLEModelFriendlyName {
   CeilingLightPro = 'Ceiling Light Pro',
   Leak = 'Water Detector',
   Keypad = 'Keypad',
+  RelaySwitch1 = 'Relay Switch 1',
   RelaySwitch1PM = 'Relay Switch 1PM',
-  RelaySwitch1Plus = 'Relay Switch 1 Plus',
   Unknown = 'Unknown',
 }
 
