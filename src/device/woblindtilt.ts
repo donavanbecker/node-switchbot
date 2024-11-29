@@ -15,7 +15,7 @@ import { SwitchBotBLEModel, SwitchBotBLEModelFriendlyName, SwitchBotBLEModelName
  * @see https://github.com/OpenWonderLabs/SwitchBotAPI-BLE/blob/latest/devicetypes/curtain.md
  */
 export class WoBlindTilt extends SwitchbotDevice {
-  private _reverse: boolean = false
+  private reverse: boolean = false
 
   /**
    * Parses the service data and manufacturer data for the WoBlindTilt device.
@@ -145,9 +145,9 @@ export class WoBlindTilt extends SwitchbotDevice {
       closing = !opening && Boolean(data[5] & 0b00000001)
       if (opening) {
         const flag = Boolean(data[5] & 0b00000001)
-        up = flag ? this._reverse : !flag
+        up = flag ? this.reverse : !flag
       } else {
-        up = tilt < 50 ? this._reverse : tilt > 50
+        up = tilt < 50 ? this.reverse : tilt > 50
       }
     }
 
@@ -166,7 +166,7 @@ export class WoBlindTilt extends SwitchbotDevice {
         up: moving && up,
         down: moving && !up,
       },
-      tilt: this._reverse ? 100 - tilt : tilt,
+      tilt: this.reverse ? 100 - tilt : tilt,
       timers: data[7],
     }
   }

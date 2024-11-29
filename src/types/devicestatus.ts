@@ -165,6 +165,17 @@ export type humidifierStatus = deviceStatus & {
   lackWater: boolean
 }
 
+export type humidifier2Status = deviceStatus & {
+  power: string
+  humidity: number
+  temperature: number
+  nebulizationEfficiency: number
+  auto: boolean
+  childLock: boolean
+  sound: boolean
+  lackWater: boolean
+}
+
 export type blindTiltStatus = deviceStatus & {
   calibrate: boolean
   battery: number

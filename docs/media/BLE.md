@@ -1126,19 +1126,20 @@ this.switchBotBLE.on('log', (log) => {
 
 The following devices are supported.
 
-| Device                    | BLE Support |
-| ------------------------- | ----------- |
-| SwitchBot Bot             | Yes         |
-| SwitchBot Curtain         | Yes         |
-| SwitchBot Meter           | Yes         |
-| SwitchBot Motion Sensor   | Yes         |
-| SwitchBot Contact Sensor  | Yes         |
-| SwitchBot Plug Mini       | Yes         |
-| SwitchBot Smart Lock      | Yes         |
-| SwitchBot Smart Lock Pro  | Yes         |
-| SwitchBot Humidifier      | Yes         |
-| SwitchBot Color Bulb      | Yes         |
-| SwitchBot LED Strip Light | Yes         |
+| Device                                         | BLE Support |
+| ---------------------------------------------- | ----------- |
+| SwitchBot Bot                                  | Yes         |
+| SwitchBot Curtain                              | Yes         |
+| SwitchBot Meter                                | Yes         |
+| SwitchBot Motion Sensor                        | Yes         |
+| SwitchBot Contact Sensor                       | Yes         |
+| SwitchBot Plug Mini                            | Yes         |
+| SwitchBot Smart Lock                           | Yes         |
+| SwitchBot Smart Lock Pro                       | Yes         |
+| SwitchBot Humidifier                           | Yes         |
+| SwitchBot Evaporative Humidifier (Auto-refill) | No          |
+| SwitchBot Color Bulb                           | Yes         |
+| SwitchBot LED Strip Light                      | Yes         |
 
 ### Summary
 

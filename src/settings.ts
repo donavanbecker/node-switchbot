@@ -3,35 +3,35 @@
  *
  * © 2024, donavanbecker (https://github.com/donavanbecker). All rights reserved.
  */
-/**
- * This is the main url used to scan for Devices SwitchBot API
- */
-export const baseURL = 'https://api.switch-bot.com/v1.1'
+let baseURL = 'https://api.switch-bot.com'
+
+let devicesURL = `${baseURL}/v1.1/devices`
+let setupWebhook = `${baseURL}/v1.1/webhook/setupWebhook`
+let queryWebhook = `${baseURL}/v1.1/webhook/queryWebhook`
+let updateWebhook = `${baseURL}/v1.1/webhook/updateWebhook`
+let deleteWebhook = `${baseURL}/v1.1/webhook/deleteWebhook`
 
 /**
- * This is the main url used to scan for Devices SwitchBot API
+ * Updates the base URL for the SwitchBot API endpoints.
+ * @param {string} newBaseURL - The new base URL to use.
  */
-export const devicesURL = 'https://api.switch-bot.com/v1.1/devices'
+export function updateBaseURL(newBaseURL: string): void {
+  baseURL = newBaseURL
+  devicesURL = `${baseURL}/v1.1/devices`
+  setupWebhook = `${baseURL}/v1.1/webhook/setupWebhook`
+  queryWebhook = `${baseURL}/v1.1/webhook/queryWebhook`
+  updateWebhook = `${baseURL}/v1.1/webhook/updateWebhook`
+  deleteWebhook = `${baseURL}/v1.1/webhook/deleteWebhook`
+}
 
-/**
- * This is the updateWebhook url used to access SwitchBot API
- */
-export const setupWebhook = 'https://api.switch-bot.com/v1.1/webhook/setupWebhook'
-
-/**
- * This is the updateWebhook url used to access SwitchBot API
- */
-export const queryWebhook = 'https://api.switch-bot.com/v1.1/webhook/queryWebhook'
-
-/**
- * This is the updateWebhook url used to access SwitchBot API
- */
-export const updateWebhook = 'https://api.switch-bot.com/v1.1/webhook/updateWebhook'
-
-/**
- * This is the deleteWebhook url used to access SwitchBot API
- */
-export const deleteWebhook = 'https://api.switch-bot.com/v1.1/webhook/deleteWebhook'
+export const urls = {
+  get baseURL() { return baseURL },
+  get devicesURL() { return devicesURL },
+  get setupWebhook() { return setupWebhook },
+  get queryWebhook() { return queryWebhook },
+  get updateWebhook() { return updateWebhook },
+  get deleteWebhook() { return deleteWebhook },
+}
 
 /**
  * constants used to access SwitchBot BLE API

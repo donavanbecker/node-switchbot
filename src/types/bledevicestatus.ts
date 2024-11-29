@@ -312,6 +312,16 @@ export type humidifierServiceData = serviceData & {
   humidity: number
 }
 
+export type humidifier2ServiceData = serviceData & {
+  model: SwitchBotBLEModel.Humidifier2
+  modelName: SwitchBotBLEModelName.Humidifier2
+  modelFriendlyName: SwitchBotBLEModelFriendlyName.Humidifier2
+  onState: boolean
+  autoMode: boolean
+  percentage: number
+  humidity: number
+}
+
 export type robotVacuumCleanerServiceData = serviceData & {
   model: SwitchBotBLEModel.Unknown
   modelName: SwitchBotBLEModelName.Unknown
@@ -330,6 +340,15 @@ export type keypadDetectorServiceData = serviceData & {
   low_battery: boolean
 }
 
+export type relaySwitch1ServiceData = serviceData & {
+  model: SwitchBotBLEModel.RelaySwitch1
+  modelName: SwitchBotBLEModelName.RelaySwitch1
+  modelFriendlyName: SwitchBotBLEModelFriendlyName.RelaySwitch1
+  mode: boolean
+  state: boolean
+  sequence_number: number
+}
+
 export type relaySwitch1PMServiceData = serviceData & {
   model: SwitchBotBLEModel.RelaySwitch1PM
   modelName: SwitchBotBLEModelName.RelaySwitch1PM
@@ -340,13 +359,4 @@ export type relaySwitch1PMServiceData = serviceData & {
   power: number
   voltage: number
   current: number
-}
-
-export type relaySwitch1PlusServiceData = serviceData & {
-  model: SwitchBotBLEModel.RelaySwitch1Plus
-  modelName: SwitchBotBLEModelName.RelaySwitch1Plus
-  modelFriendlyName: SwitchBotBLEModelFriendlyName.RelaySwitch1Plus
-  mode: boolean
-  state: boolean
-  sequence_number: number
 }
