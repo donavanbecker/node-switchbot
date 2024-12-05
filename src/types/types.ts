@@ -7,7 +7,7 @@ import type { Buffer } from 'node:buffer'
 import type * as Noble from '@stoprocent/noble'
 
 import type { SwitchbotDevice } from '../device.js'
-import type { batteryCirculatorFanServiceData, blindTiltServiceData, botServiceData, ceilingLightProServiceData, ceilingLightServiceData, colorBulbServiceData, contactSensorServiceData, curtain3ServiceData, curtainServiceData, hub2ServiceData, humidifierServiceData, keypadDetectorServiceData, lockProServiceData, lockServiceData, meterPlusServiceData, meterProCO2ServiceData, meterProServiceData, meterServiceData, motionSensorServiceData, outdoorMeterServiceData, plugMiniJPServiceData, plugMiniUSServiceData, relaySwitch1PlusServiceData, relaySwitch1PMServiceData, robotVacuumCleanerServiceData, stripLightServiceData, waterLeakDetectorServiceData } from '../index.js'
+import type { batteryCirculatorFanServiceData, blindTiltServiceData, botServiceData, ceilingLightProServiceData, ceilingLightServiceData, colorBulbServiceData, contactSensorServiceData, curtain3ServiceData, curtainServiceData, hub2ServiceData, humidifierServiceData, keypadDetectorServiceData, lockProServiceData, lockServiceData, meterPlusServiceData, meterProCO2ServiceData, meterProServiceData, meterServiceData, motionSensorServiceData, outdoorMeterServiceData, plugMiniJPServiceData, plugMiniUSServiceData, relaySwitch1PMServiceData, relaySwitch1ServiceData, robotVacuumCleanerServiceData, stripLightServiceData, waterLeakDetectorServiceData } from '../index.js'
 
 export type MacAddress = string
 
@@ -210,7 +210,7 @@ export interface ad {
   id: string
   address: string
   rssi: number
-  serviceData: botServiceData | colorBulbServiceData | contactSensorServiceData | curtainServiceData | curtain3ServiceData | stripLightServiceData | lockServiceData | lockProServiceData | meterServiceData | meterPlusServiceData | meterProServiceData | meterProCO2ServiceData | motionSensorServiceData | outdoorMeterServiceData | plugMiniUSServiceData | plugMiniJPServiceData | blindTiltServiceData | ceilingLightServiceData | ceilingLightProServiceData | hub2ServiceData | batteryCirculatorFanServiceData | waterLeakDetectorServiceData | humidifierServiceData | robotVacuumCleanerServiceData | keypadDetectorServiceData | relaySwitch1PMServiceData | relaySwitch1PlusServiceData
+  serviceData: botServiceData | colorBulbServiceData | contactSensorServiceData | curtainServiceData | curtain3ServiceData | stripLightServiceData | lockServiceData | lockProServiceData | meterServiceData | meterPlusServiceData | meterProServiceData | meterProCO2ServiceData | motionSensorServiceData | outdoorMeterServiceData | plugMiniUSServiceData | plugMiniJPServiceData | blindTiltServiceData | ceilingLightServiceData | ceilingLightProServiceData | hub2ServiceData | batteryCirculatorFanServiceData | waterLeakDetectorServiceData | humidifierServiceData | robotVacuumCleanerServiceData | keypadDetectorServiceData | relaySwitch1PMServiceData | relaySwitch1ServiceData
   [key: string]: unknown
 }
 
