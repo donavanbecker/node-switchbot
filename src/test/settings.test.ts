@@ -5,13 +5,9 @@ import {
   CHAR_UUID_NOTIFY,
   CHAR_UUID_WRITE,
   COMMAND_TIMEOUT_MSEC,
-  deleteWebhook,
-  devicesURL,
-  queryWebhook,
   READ_TIMEOUT_MSEC,
   SERV_UUID_PRIMARY,
-  setupWebhook,
-  updateWebhook,
+  urls,
   WoSmartLockCommands,
   WoSmartLockProCommands,
   WRITE_TIMEOUT_MSEC,
@@ -19,23 +15,23 @@ import {
 
 describe('switchBot API Settings', () => {
   it('should have correct Devices URL', () => {
-    expect(devicesURL).toBe('https://api.switch-bot.com/v1.1/devices')
+    expect(urls.devicesURL).toBe('https://api.switch-bot.com/v1.1/devices')
   })
 
   it('should have correct setupWebhook URL', () => {
-    expect(setupWebhook).toBe('https://api.switch-bot.com/v1.1/webhook/setupWebhook')
+    expect(urls.setupWebhook).toBe('https://api.switch-bot.com/v1.1/webhook/setupWebhook')
   })
 
   it('should have correct queryWebhook URL', () => {
-    expect(queryWebhook).toBe('https://api.switch-bot.com/v1.1/webhook/queryWebhook')
+    expect(urls.queryWebhook).toBe('https://api.switch-bot.com/v1.1/webhook/queryWebhook')
   })
 
   it('should have correct updateWebhook URL', () => {
-    expect(updateWebhook).toBe('https://api.switch-bot.com/v1.1/webhook/updateWebhook')
+    expect(urls.updateWebhook).toBe('https://api.switch-bot.com/v1.1/webhook/updateWebhook')
   })
 
   it('should have correct deleteWebhook URL', () => {
-    expect(deleteWebhook).toBe('https://api.switch-bot.com/v1.1/webhook/deleteWebhook')
+    expect(urls.deleteWebhook).toBe('https://api.switch-bot.com/v1.1/webhook/deleteWebhook')
   })
 
   it('should have correct BLE API constants', () => {

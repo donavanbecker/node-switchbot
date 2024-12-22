@@ -16,7 +16,7 @@ import { createServer } from 'node:http'
 
 import { request } from 'undici'
 
-import { baseURL, deleteWebhook, devicesURL, queryWebhook, setupWebhook, updateWebhook } from './settings.js'
+import { updateBaseURL, urls } from './settings.js'
 
 /**
  * The `SwitchBotOpenAPI` class provides methods to interact with the SwitchBot OpenAPI.
@@ -66,11 +66,15 @@ export class SwitchBotOpenAPI extends EventEmitter {
    * @param token - The API token used for authentication.
    * @param secret - The secret key used for signing requests.
    */
-  constructor(token: string, secret: string) {
+  constructor(token: string, secret: string, hostname?: string) {
     super()
     this.token = token
     this.secret = secret
-    this.baseURL = baseURL
+    this.baseURL = urls.baseURL
+
+    if (hostname) {
+      updateBaseURL(hostname)
+    }
   }
 
   /**
@@ -91,7 +95,7 @@ export class SwitchBotOpenAPI extends EventEmitter {
    */
   async getDevices(): Promise<{ response: devices, statusCode: number }> {
     try {
-      const { body, statusCode } = await request(devicesURL, { headers: this.generateHeaders() })
+      const { body, statusCode } = await request(urls.devicesURL, { headers: this.generateHeaders() })
       const response = await body.json() as devices
       this.emitLog('debug', `Got devices: ${JSON.stringify(response)}`)
       this.emitLog('debug', `statusCode: ${statusCode}`)
@@ -233,7 +237,7 @@ export class SwitchBotOpenAPI extends EventEmitter {
     }
 
     try {
-      const { body, statusCode } = await request(setupWebhook, {
+      const { body, statusCode } = await request(urls.setupWebhook, {
         method: 'POST',
         headers: this.generateHeaders(),
         body: JSON.stringify({
@@ -252,7 +256,7 @@ export class SwitchBotOpenAPI extends EventEmitter {
     }
 
     try {
-      const { body, statusCode } = await request(updateWebhook, {
+      const { body, statusCode } = await request(urls.updateWebhook, {
         method: 'POST',
         headers: this.generateHeaders(),
         body: JSON.stringify({
@@ -273,7 +277,7 @@ export class SwitchBotOpenAPI extends EventEmitter {
     }
 
     try {
-      const { body, statusCode } = await request(queryWebhook, {
+      const { body, statusCode } = await request(urls.queryWebhook, {
         method: 'POST',
         headers: this.generateHeaders(),
         body: JSON.stringify({
@@ -302,7 +306,7 @@ export class SwitchBotOpenAPI extends EventEmitter {
    */
   async deleteWebhook(url: string): Promise<void> {
     try {
-      const { body, statusCode } = await request(deleteWebhook, {
+      const { body, statusCode } = await request(urls.deleteWebhook, {
         method: 'POST',
         headers: this.generateHeaders(),
         body: JSON.stringify({

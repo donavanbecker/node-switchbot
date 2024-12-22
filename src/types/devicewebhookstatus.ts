@@ -240,3 +240,9 @@ export type humidifierWebhookContext = deviceWebhookContext & {
   humidity: number
   scale: 'CELSIUS' | 'FAHRENHEIT'
 }
+
+export type humidifier2WebhookContext = deviceWebhookContext & {
+  temperature: number
+  humidity: number
+  scale: 'CELSIUS' | 'FAHRENHEIT'
+}

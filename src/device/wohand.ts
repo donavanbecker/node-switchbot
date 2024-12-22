@@ -25,22 +25,24 @@ export class WoHand extends SwitchbotDevice {
     serviceData: Buffer,
     emitLog: (level: string, message: string) => void,
   ): Promise<botServiceData | null> {
-    if (serviceData.length !== 3) {
-      emitLog('debugerror', `[parseServiceData] Buffer length ${serviceData.length} !== 3!`)
+    if (!serviceData || serviceData.length < 3) {
+      emitLog('debugerror', `[parseServiceData] Service Data Buffer length ${serviceData?.length ?? 0} < 3!`)
       return null
     }
 
     const byte1 = serviceData.readUInt8(1)
     const byte2 = serviceData.readUInt8(2)
 
-    return {
+    const data: botServiceData = {
       model: SwitchBotBLEModel.Bot,
       modelName: SwitchBotBLEModelName.Bot,
       modelFriendlyName: SwitchBotBLEModelFriendlyName.Bot,
       mode: !!(byte1 & 0b10000000), // Whether the light switch Add-on is used or not. 0 = press, 1 = switch
-      state: !(byte1 & 0b01000000), // Whether the switch status is ON or OFF. 0 = on, 1 = off
+      state: !!(byte1 & 0b01000000), // Whether the switch status is ON or OFF. 0 = on, 1 = off
       battery: byte2 & 0b01111111, // %
     }
+
+    return data
   }
 
   constructor(peripheral: NobleTypes['peripheral'], noble: NobleTypes['noble']) {

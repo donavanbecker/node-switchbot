@@ -15,6 +15,7 @@ import { WoContact } from './device/wocontact.js'
 import { WoCurtain } from './device/wocurtain.js'
 import { WoHand } from './device/wohand.js'
 import { WoHub2 } from './device/wohub2.js'
+import { WoHumi2 } from './device/wohumi2.js'
 import { WoHumi } from './device/wohumi.js'
 import { WoIOSensorTH } from './device/woiosensorth.js'
 import { WoKeypad } from './device/wokeypad.js'
@@ -22,7 +23,7 @@ import { WoLeak } from './device/woleak.js'
 import { WoPlugMiniUS } from './device/woplugmini.js'
 import { WoPlugMiniJP } from './device/woplugmini_jp.js'
 import { WoPresence } from './device/wopresence.js'
-import { WoRelaySwitch1Plus } from './device/worelayswitch1plus.js'
+import { WoRelaySwitch1 } from './device/worelayswitch1.js'
 import { WoRelaySwitch1PM } from './device/worelayswitch1pm.js'
 import { WoSensorTH } from './device/wosensorth.js'
 import { WoSensorTHPlus } from './device/wosensorthplus.js'
@@ -227,6 +228,7 @@ export class SwitchBotBLE extends EventEmitter {
         case SwitchBotBLEModel.Curtain:
         case SwitchBotBLEModel.Curtain3: return new WoCurtain(peripheral, this.noble)
         case SwitchBotBLEModel.Humidifier: return new WoHumi(peripheral, this.noble)
+        case SwitchBotBLEModel.Humidifier2: return new WoHumi2(peripheral, this.noble)
         case SwitchBotBLEModel.Meter: return new WoSensorTH(peripheral, this.noble)
         case SwitchBotBLEModel.MeterPlus: return new WoSensorTHPlus(peripheral, this.noble)
         case SwitchBotBLEModel.MeterPro: return new WoSensorTHPro(peripheral, this.noble)
@@ -246,8 +248,8 @@ export class SwitchBotBLE extends EventEmitter {
         case SwitchBotBLEModel.LockPro: return new WoSmartLockPro(peripheral, this.noble)
         case SwitchBotBLEModel.BlindTilt: return new WoBlindTilt(peripheral, this.noble)
         case SwitchBotBLEModel.Keypad: return new WoKeypad(peripheral, this.noble)
+        case SwitchBotBLEModel.RelaySwitch1: return new WoRelaySwitch1(peripheral, this.noble)
         case SwitchBotBLEModel.RelaySwitch1PM: return new WoRelaySwitch1PM(peripheral, this.noble)
-        case SwitchBotBLEModel.RelaySwitch1Plus: return new WoRelaySwitch1Plus(peripheral, this.noble)
         default: return new SwitchbotDevice(peripheral, this.noble)
       }
     }

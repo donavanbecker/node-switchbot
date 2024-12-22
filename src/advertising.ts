@@ -15,13 +15,14 @@ import { WoContact } from './device/wocontact.js'
 import { WoCurtain } from './device/wocurtain.js'
 import { WoHand } from './device/wohand.js'
 import { WoHub2 } from './device/wohub2.js'
+import { WoHumi2 } from './device/wohumi2.js'
 import { WoHumi } from './device/wohumi.js'
 import { WoIOSensorTH } from './device/woiosensorth.js'
 import { WoLeak } from './device/woleak.js'
 import { WoPlugMiniUS } from './device/woplugmini.js'
 import { WoPlugMiniJP } from './device/woplugmini_jp.js'
 import { WoPresence } from './device/wopresence.js'
-import { WoRelaySwitch1Plus } from './device/worelayswitch1plus.js'
+import { WoRelaySwitch1 } from './device/worelayswitch1.js'
 import { WoRelaySwitch1PM } from './device/worelayswitch1pm.js'
 import { WoSensorTH } from './device/wosensorth.js'
 import { WoSensorTHPlus } from './device/wosensorthplus.js'
@@ -121,6 +122,8 @@ export class Advertising {
         return WoCurtain.parseServiceData(serviceData, manufacturerData, emitLog)
       case SwitchBotBLEModel.Humidifier:
         return WoHumi.parseServiceData(serviceData, emitLog)
+      case SwitchBotBLEModel.Humidifier2:
+        return WoHumi2.parseServiceData(serviceData, emitLog)
       case SwitchBotBLEModel.Meter:
         return WoSensorTH.parseServiceData(serviceData, emitLog)
       case SwitchBotBLEModel.MeterPlus:
@@ -157,10 +160,10 @@ export class Advertising {
         return WoBlindTilt.parseServiceData(serviceData, manufacturerData, emitLog)
       case SwitchBotBLEModel.Leak:
         return WoLeak.parseServiceData(serviceData, manufacturerData, emitLog)
+      case SwitchBotBLEModel.RelaySwitch1:
+        return WoRelaySwitch1.parseServiceData(serviceData, manufacturerData, emitLog)
       case SwitchBotBLEModel.RelaySwitch1PM:
         return WoRelaySwitch1PM.parseServiceData(serviceData, manufacturerData, emitLog)
-      case SwitchBotBLEModel.RelaySwitch1Plus:
-        return WoRelaySwitch1Plus.parseServiceData(serviceData, manufacturerData, emitLog)
       default:
         emitLog('debug', `[parseAdvertising.${model}] return null, model "${model}" not available!`)
         return null

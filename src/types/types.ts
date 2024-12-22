@@ -7,7 +7,7 @@ import type { Buffer } from 'node:buffer'
 import type * as Noble from '@stoprocent/noble'
 
 import type { SwitchbotDevice } from '../device.js'
-import type { batteryCirculatorFanServiceData, blindTiltServiceData, botServiceData, ceilingLightProServiceData, ceilingLightServiceData, colorBulbServiceData, contactSensorServiceData, curtain3ServiceData, curtainServiceData, hub2ServiceData, humidifierServiceData, keypadDetectorServiceData, lockProServiceData, lockServiceData, meterPlusServiceData, meterProCO2ServiceData, meterProServiceData, meterServiceData, motionSensorServiceData, outdoorMeterServiceData, plugMiniJPServiceData, plugMiniUSServiceData, relaySwitch1PlusServiceData, relaySwitch1PMServiceData, robotVacuumCleanerServiceData, stripLightServiceData, waterLeakDetectorServiceData } from '../index.js'
+import type { batteryCirculatorFanServiceData, blindTiltServiceData, botServiceData, ceilingLightProServiceData, ceilingLightServiceData, colorBulbServiceData, contactSensorServiceData, curtain3ServiceData, curtainServiceData, hub2ServiceData, humidifier2ServiceData, humidifierServiceData, keypadDetectorServiceData, lockProServiceData, lockServiceData, meterPlusServiceData, meterProCO2ServiceData, meterProServiceData, meterServiceData, motionSensorServiceData, outdoorMeterServiceData, plugMiniJPServiceData, plugMiniUSServiceData, relaySwitch1PMServiceData, relaySwitch1ServiceData, robotVacuumCleanerServiceData, stripLightServiceData, waterLeakDetectorServiceData } from '../index.js'
 
 export type MacAddress = string
 
@@ -54,6 +54,7 @@ export enum SwitchBotModel {
   Curtain = 'W0701600',
   Curtain3 = 'W2400000',
   Humidifier = 'W0801800',
+  Humidifier2 = 'WXXXXXXX',
   Plug = 'SP11', // Currently only available in Japan
   Meter = 'SwitchBot MeterTH S1',
   MeterPlusJP = 'W2201500',
@@ -96,6 +97,7 @@ export enum SwitchBotBLEModel {
   Curtain = 'c',
   Curtain3 = '{',
   Humidifier = 'e',
+  Humidifier2 = 'E',
   Meter = 'T',
   MeterPlus = 'i',
   MeterPro = '4',
@@ -115,8 +117,8 @@ export enum SwitchBotBLEModel {
   BlindTilt = 'x',
   Leak = '3',
   Keypad = 'y',
+  RelaySwitch1 = ';',
   RelaySwitch1PM = '<',
-  RelaySwitch1Plus = ';',
   Unknown = 'Unknown',
 }
 
@@ -127,6 +129,7 @@ export enum SwitchBotBLEModelName {
   Curtain = 'WoCurtain',
   Curtain3 = 'WoCurtain3',
   Humidifier = 'WoHumi',
+  Humidifier2 = 'WoHumi2',
   Meter = 'WoSensorTH',
   MeterPlus = 'WoSensorTHPlus',
   MeterPro = 'WoSensorTHP',
@@ -143,8 +146,8 @@ export enum SwitchBotBLEModelName {
   CeilingLightPro = 'WoCeilingLightPro',
   Leak = 'WoLeakDetector',
   Keypad = 'WoKeypad',
+  RelaySwitch1 = 'WoRelaySwitch1Plus',
   RelaySwitch1PM = 'WoRelaySwitch1PM',
-  RelaySwitch1Plus = 'WoRelaySwitch1Plus',
   Unknown = 'Unknown',
 }
 
@@ -155,6 +158,7 @@ export enum SwitchBotBLEModelFriendlyName {
   Curtain = 'Curtain',
   Curtain3 = 'Curtain 3',
   Humidifier = 'Humidifier',
+  Humidifier2 = 'Humidifier2',
   Meter = 'Meter',
   Lock = 'Lock',
   LockPro = 'Lock Pro',
@@ -171,8 +175,8 @@ export enum SwitchBotBLEModelFriendlyName {
   CeilingLightPro = 'Ceiling Light Pro',
   Leak = 'Water Detector',
   Keypad = 'Keypad',
+  RelaySwitch1 = 'Relay Switch 1',
   RelaySwitch1PM = 'Relay Switch 1PM',
-  RelaySwitch1Plus = 'Relay Switch 1 Plus',
   Unknown = 'Unknown',
 }
 
@@ -210,7 +214,7 @@ export interface ad {
   id: string
   address: string
   rssi: number
-  serviceData: botServiceData | colorBulbServiceData | contactSensorServiceData | curtainServiceData | curtain3ServiceData | stripLightServiceData | lockServiceData | lockProServiceData | meterServiceData | meterPlusServiceData | meterProServiceData | meterProCO2ServiceData | motionSensorServiceData | outdoorMeterServiceData | plugMiniUSServiceData | plugMiniJPServiceData | blindTiltServiceData | ceilingLightServiceData | ceilingLightProServiceData | hub2ServiceData | batteryCirculatorFanServiceData | waterLeakDetectorServiceData | humidifierServiceData | robotVacuumCleanerServiceData | keypadDetectorServiceData | relaySwitch1PMServiceData | relaySwitch1PlusServiceData
+  serviceData: botServiceData | colorBulbServiceData | contactSensorServiceData | curtainServiceData | curtain3ServiceData | stripLightServiceData | lockServiceData | lockProServiceData | meterServiceData | meterPlusServiceData | meterProServiceData | meterProCO2ServiceData | motionSensorServiceData | outdoorMeterServiceData | plugMiniUSServiceData | plugMiniJPServiceData | blindTiltServiceData | ceilingLightServiceData | ceilingLightProServiceData | hub2ServiceData | batteryCirculatorFanServiceData | waterLeakDetectorServiceData | humidifierServiceData | humidifier2ServiceData | robotVacuumCleanerServiceData | keypadDetectorServiceData | relaySwitch1PMServiceData | relaySwitch1ServiceData
   [key: string]: unknown
 }
 

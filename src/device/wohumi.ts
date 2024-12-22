@@ -10,11 +10,23 @@ import { Buffer } from 'node:buffer'
 import { SwitchbotDevice } from '../device.js'
 import { SwitchBotBLEModel, SwitchBotBLEModelFriendlyName, SwitchBotBLEModelName } from '../types/types.js'
 
+const HUMIDIFIER_COMMAND_HEADER = '5701'
+const TURN_ON_KEY = `${HUMIDIFIER_COMMAND_HEADER}0101`
+const TURN_OFF_KEY = `${HUMIDIFIER_COMMAND_HEADER}0102`
+const INCREASE_KEY = `${HUMIDIFIER_COMMAND_HEADER}0103`
+const DECREASE_KEY = `${HUMIDIFIER_COMMAND_HEADER}0104`
+const SET_AUTO_MODE_KEY = `${HUMIDIFIER_COMMAND_HEADER}0105`
+const SET_MANUAL_MODE_KEY = `${HUMIDIFIER_COMMAND_HEADER}0106`
+
 /**
  * Class representing a WoHumi device.
  * @see https://github.com/OpenWonderLabs/SwitchBotAPI-BLE/tree/latest/devicetypes
  */
 export class WoHumi extends SwitchbotDevice {
+  constructor(peripheral: NobleTypes['peripheral'], noble: NobleTypes['noble']) {
+    super(peripheral, noble)
+  }
+
   /**
    * Parses the service data for WoHumi.
    * @param {Buffer} serviceData - The service data buffer.
@@ -51,17 +63,12 @@ export class WoHumi extends SwitchbotDevice {
     return data
   }
 
-  constructor(peripheral: NobleTypes['peripheral'], noble: NobleTypes['noble']) {
-    super(peripheral, noble)
-  }
-
   /**
    * Sends a command to the humidifier.
-   * @param {number[]} bytes - The command bytes.
+   * @param {Buffer} reqBuf - The command buffer.
    * @returns {Promise<void>}
    */
-  public async operateHumi(bytes: number[]): Promise<void> {
-    const reqBuf = Buffer.from(bytes)
+  protected async operateHumi(reqBuf: Buffer): Promise<void> {
     const resBuf = await this.command(reqBuf)
     const code = resBuf.readUInt8(0)
 
@@ -71,42 +78,63 @@ export class WoHumi extends SwitchbotDevice {
   }
 
   /**
-   * Presses the humidifier button.
-   * @returns {Promise<void>}
-   */
-  async press(): Promise<void> {
-    await this.operateHumi([0x57, 0x01, 0x00])
-  }
-
-  /**
    * Turns on the humidifier.
    * @returns {Promise<void>}
    */
-  async turnOn(): Promise<void> {
-    await this.operateHumi([0x57, 0x01, 0x01])
+  public async turnOn(): Promise<void> {
+    await this.operateHumi(Buffer.from(TURN_ON_KEY, 'hex'))
   }
 
   /**
    * Turns off the humidifier.
    * @returns {Promise<void>}
    */
-  async turnOff(): Promise<void> {
-    await this.operateHumi([0x57, 0x01, 0x02])
-  }
-
-  /**
-   * Decreases the humidifier setting.
-   * @returns {Promise<void>}
-   */
-  async down(): Promise<void> {
-    await this.operateHumi([0x57, 0x01, 0x03])
+  public async turnOff(): Promise<void> {
+    await this.operateHumi(Buffer.from(TURN_OFF_KEY, 'hex'))
   }
 
   /**
    * Increases the humidifier setting.
    * @returns {Promise<void>}
    */
-  async up(): Promise<void> {
-    await this.operateHumi([0x57, 0x01, 0x04])
+  public async increase(): Promise<void> {
+    await this.operateHumi(Buffer.from(INCREASE_KEY, 'hex'))
+  }
+
+  /**
+   * Decreases the humidifier setting.
+   * @returns {Promise<void>}
+   */
+  public async decrease(): Promise<void> {
+    await this.operateHumi(Buffer.from(DECREASE_KEY, 'hex'))
+  }
+
+  /**
+   * Sets the humidifier to auto mode.
+   * @returns {Promise<void>}
+   */
+  public async setAutoMode(): Promise<void> {
+    await this.operateHumi(Buffer.from(SET_AUTO_MODE_KEY, 'hex'))
+  }
+
+  /**
+   * Sets the humidifier to manual mode.
+   * @returns {Promise<void>}
+   */
+  public async setManualMode(): Promise<void> {
+    await this.operateHumi(Buffer.from(SET_MANUAL_MODE_KEY, 'hex'))
+  }
+
+  /**
+   * Sets the humidifier level.
+   * @param {number} level - The level to set (0-100).
+   * @returns {Promise<void>}
+   */
+  public async percentage(level: number): Promise<void> {
+    if (level < 0 || level > 100) {
+      throw new Error('Level must be between 0 and 100')
+    }
+    const levelKey = `${HUMIDIFIER_COMMAND_HEADER}0107${level.toString(16).padStart(2, '0')}`
+    await this.operateHumi(Buffer.from(levelKey, 'hex'))
   }
 }

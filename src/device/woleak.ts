@@ -37,21 +37,10 @@ export class WoLeak extends SwitchbotDevice {
       return null
     }
 
-    const modelId = serviceData.readUInt8(0)
-
-    if (modelId !== 0x26) {
-      // Not a Water Leak Detector
-      emitLog('debugerror', `[parseServiceDataForWoLeakDetector] Model ID ${modelId} !== 0x26!`)
-      return null
-    }
-
-    const eventFlags = serviceData.readUInt8(1)
-    const waterLeakDetected = !!(eventFlags & 0b00000001) // Bit 0
-    const deviceTampered = !!(eventFlags & 0b00000010) // Bit 1
-
-    const batteryInfo = serviceData.readUInt8(2)
-    const batteryLevel = batteryInfo & 0b01111111 // Bits 0-6
-    const lowBattery = !!(batteryInfo & 0b10000000) // Bit 7
+    const waterLeakDetected = !!(manufacturerData.readUInt8(8) & 0b00000001) // Bit 0
+    const deviceTampered = !!(manufacturerData.readUInt8(8) & 0b00000010) // Bit 1
+    const batteryLevel = manufacturerData.readUInt8(7) & 0b01111111 // Bits 0-6
+    const lowBattery = !!(manufacturerData.readUInt8(7) & 0b10000000) // Bit 7
 
     // Manufacturer data can be processed here if needed
 

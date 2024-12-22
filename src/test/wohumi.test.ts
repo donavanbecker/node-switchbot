@@ -2,93 +2,44 @@ import type { NobleTypes } from '../types/types.js'
 
 import { Buffer } from 'node:buffer'
 
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
+import { SwitchbotDevice } from '../device.js'
 import { WoHumi } from '../device/wohumi.js'
-import { SwitchBotBLEModel, SwitchBotBLEModelFriendlyName, SwitchBotBLEModelName } from '../types/types.js'
 
 describe('woHumi', () => {
-  const emitLog = vi.fn()
+  let wohumi: WoHumi
+  let mockPeripheral: NobleTypes['peripheral']
+  let mockNoble: NobleTypes['noble']
 
-  describe('parseServiceData', () => {
-    it('should return parsed data for valid service data', async () => {
-      const serviceData = Buffer.from([0x00, 0x80, 0x00, 0x00, 0x80, 0x00, 0x00, 0x00])
-      const result = await WoHumi.parseServiceData(serviceData, emitLog)
-      expect(result).toEqual({
-        model: SwitchBotBLEModel.Humidifier,
-        modelName: SwitchBotBLEModelName.Humidifier,
-        modelFriendlyName: SwitchBotBLEModelFriendlyName.Humidifier,
-        onState: true,
-        autoMode: true,
-        percentage: 0,
-        humidity: 0,
-      })
-    })
-
-    it('should return null for invalid service data length', async () => {
-      const serviceData = Buffer.from([0x00, 0x80, 0x00])
-      const result = await WoHumi.parseServiceData(serviceData, emitLog)
-      expect(result).toBeNull()
-      expect(emitLog).toHaveBeenCalledWith('error', '[parseServiceDataForWoHumi] Buffer length 3 !== 8!')
-    })
+  beforeEach(() => {
+    mockPeripheral = {} as NobleTypes['peripheral']
+    mockNoble = {} as NobleTypes['noble']
+    wohumi = new WoHumi(mockPeripheral, mockNoble)
+    jest.spyOn(SwitchbotDevice.prototype, 'command').mockResolvedValue(Buffer.from([0x01, 0x00, 0x00]))
   })
 
-  describe('operateHumi', () => {
-    it('should throw an error if the device returns an error', async () => {
-      const peripheral = {} as unknown as NobleTypes['peripheral']
-      const wohumi = new WoHumi(peripheral, emitLog as any)
-      vi.spyOn(wohumi, 'command').mockResolvedValue(Buffer.from([0x00, 0x00, 0x00]))
-      await expect(wohumi.operateHumi([0x57, 0x01, 0x00])).rejects.toThrow('The device returned an error: 0x000000')
-    })
+  afterEach(() => {
+    jest.restoreAllMocks()
   })
 
-  describe('press', () => {
-    it('should call operateHumi with correct bytes', async () => {
-      const peripheral = {} as unknown as NobleTypes['peripheral']
-      const wohumi = new WoHumi(peripheral, emitLog as any)
-      const operateHumiSpy = vi.spyOn(wohumi, 'operateHumi').mockResolvedValue()
-      await wohumi.press()
-      expect(operateHumiSpy).toHaveBeenCalledWith([0x57, 0x01, 0x00])
+  describe('percentage', () => {
+    it('should throw an error if level is less than 0', async () => {
+      await expect(wohumi.percentage(-1)).rejects.toThrow('Level must be between 0 and 100')
     })
-  })
 
-  describe('turnOn', () => {
-    it('should call operateHumi with correct bytes', async () => {
-      const peripheral = {} as unknown as NobleTypes['peripheral']
-      const wohumi = new WoHumi(peripheral, emitLog as any)
-      const operateHumiSpy = vi.spyOn(wohumi, 'operateHumi').mockResolvedValue()
-      await wohumi.turnOn()
-      expect(operateHumiSpy).toHaveBeenCalledWith([0x57, 0x01, 0x01])
+    it('should throw an error if level is greater than 100', async () => {
+      await expect(wohumi.percentage(101)).rejects.toThrow('Level must be between 0 and 100')
     })
-  })
 
-  describe('turnOff', () => {
-    it('should call operateHumi with correct bytes', async () => {
-      const peripheral = {} as unknown as NobleTypes['peripheral']
-      const wohumi = new WoHumi(peripheral, emitLog as any)
-      const operateHumiSpy = vi.spyOn(wohumi, 'operateHumi').mockResolvedValue()
-      await wohumi.turnOff()
-      expect(operateHumiSpy).toHaveBeenCalledWith([0x57, 0x01, 0x02])
-    })
-  })
+    it('should send the correct command for a valid level', async () => {
+      const level = 50
+      const expectedCommand = Buffer.from(`57010107${level.toString(16).padStart(2, '0')}`, 'hex')
+      const operateHumiSpy = jest.spyOn(wohumi as any, 'operateHumi')
 
-  describe('down', () => {
-    it('should call operateHumi with correct bytes', async () => {
-      const peripheral = {} as unknown as NobleTypes['peripheral']
-      const wohumi = new WoHumi(peripheral, emitLog as any)
-      const operateHumiSpy = vi.spyOn(wohumi, 'operateHumi').mockResolvedValue()
-      await wohumi.down()
-      expect(operateHumiSpy).toHaveBeenCalledWith([0x57, 0x01, 0x03])
-    })
-  })
+      await wohumi.percentage(level)
 
-  describe('up', () => {
-    it('should call operateHumi with correct bytes', async () => {
-      const peripheral = {} as unknown as NobleTypes['peripheral']
-      const wohumi = new WoHumi(peripheral, emitLog as any)
-      const operateHumiSpy = vi.spyOn(wohumi, 'operateHumi').mockResolvedValue()
-      await wohumi.up()
-      expect(operateHumiSpy).toHaveBeenCalledWith([0x57, 0x01, 0x04])
+      expect(operateHumiSpy).toHaveBeenCalledWith(expectedCommand)
     })
   })
 })

@@ -167,18 +167,19 @@ this.switchBotAPI.on('log', (log) => {
 
 The following devices are supported.
 
-| Device                    | OpenAPI Support | Webhook Support |
-| ------------------------- | --------------- | --------------- |
-| SwitchBot Bot             | Yes             | Yes             |
-| SwitchBot Curtain         | Yes             | Yes             |
-| SwitchBot Meter           | Yes             | Yes             |
-| SwitchBot Motion Sensor   | Yes             | Yes             |
-| SwitchBot Contact Sensor  | Yes             | Yes             |
-| SwitchBot Plug Mini       | Yes             | Yes             |
-| SwitchBot Smart Lock      | Yes             | Yes             |
-| SwitchBot Humidifier      | Yes             | Yes             |
-| SwitchBot Color Bulb      | Yes             | Yes             |
-| SwitchBot LED Strip Light | Yes             | Yes             |
+| Device                                         | OpenAPI Support | Webhook Support |
+| ---------------------------------------------- | --------------- | --------------- |
+| SwitchBot Bot                                  | Yes             | Yes             |
+| SwitchBot Curtain                              | Yes             | Yes             |
+| SwitchBot Meter                                | Yes             | Yes             |
+| SwitchBot Motion Sensor                        | Yes             | Yes             |
+| SwitchBot Contact Sensor                       | Yes             | Yes             |
+| SwitchBot Plug Min                             | Yes             | Yes             |
+| SwitchBot Smart Lock                           | Yes             | Yes             |
+| SwitchBot Humidifier                           | Yes             | Yes             |
+| SwitchBot Evaporative Humidifier (Auto-refill) | Yes             | Yes             |
+| SwitchBot Color Bulb                           | Yes             | Yes             |
+| SwitchBot LED Strip Light                      | Yes             | Yes             |
 
 ### Summary
 

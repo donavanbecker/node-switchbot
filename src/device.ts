@@ -17,7 +17,6 @@ import { CHAR_UUID_DEVICE, CHAR_UUID_NOTIFY, CHAR_UUID_WRITE, READ_TIMEOUT_MSEC,
  * Represents a Switchbot Device.
  */
 export class SwitchbotDevice extends EventEmitter {
-  [x: string]: any
   private noble: NobleTypes['noble']
   private peripheral: NobleTypes['peripheral']
   private characteristics: Chars | null = null
