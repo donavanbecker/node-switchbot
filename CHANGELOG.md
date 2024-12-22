@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. This project uses [Semantic Versioning](https://semver.org/)
 
+## [3.4.3](https://github.com/OpenWonderLabs/node-switchbot/releases/tag/v3.4.3) (2024-12-22)
+
+### What's Changed
+- Fixed `getDeviceStatus` for `openAPI`
+- Housekeeping and update dependencies
+
+**Full Changelog**: https://github.com/OpenWonderLabs/node-switchbot/compare/v3.4.2...v3.4.3
+
 ## [3.4.2](https://github.com/OpenWonderLabs/node-switchbot/releases/tag/v3.4.2) (2024-12-21)
 
 ### What's Changed

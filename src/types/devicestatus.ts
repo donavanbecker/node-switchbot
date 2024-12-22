@@ -49,13 +49,15 @@ export type meterProStatus = deviceStatus & {
   temperature: number
   battery: number
   humidity: number
+  version: string
 }
 
 export type meterProCO2Status = deviceStatus & {
   temperature: number
   battery: number
   humidity: number
-  co2: number
+  version: string
+  CO2: number
 }
 
 export type outdoorMeterStatus = deviceStatus & {
@@ -192,11 +194,22 @@ export type hub2Status = deviceStatus & {
 
 export type batteryCirculatorFanStatus = deviceStatus & {
   mode: 'direct' | 'natural' | 'sleep' | 'baby'
+  version: string
   battery: number
   power: string
   nightStatus: number
   oscillation: string
   verticalOscillation: string
   chargingStatus: string
+  fanSpeed: number
+}
+
+export type circulatorFanStatus = deviceStatus & {
+  mode: 'direct' | 'natural' | 'sleep' | 'baby'
+  version: string
+  power: string
+  nightStatus: number
+  oscillation: string
+  verticalOscillation: string
   fanSpeed: number
 }
