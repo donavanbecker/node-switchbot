@@ -170,7 +170,7 @@ export class SwitchBotOpenAPI extends EventEmitter {
    * - `t`: The current timestamp in milliseconds since the Unix epoch.
    * - `Content-Type`: The content type of the request, set to `application/json`.
    */
-  private generateHeaders = (): { 'Authorization': string, 'sign': string, 'nonce': `${string}-${string}-${string}-${string}-${string}`, 't': string, 'Content-Type': string, 'X-Amz-Date': string } => {
+  private generateHeaders = (): { 'Authorization': string, 'sign': string, 'nonce': `${string}-${string}-${string}-${string}-${string}`, 't': string, 'Content-Type': string } => {
     const t = `${Date.now()}`
     const nonce = randomUUID()
     const data = this.token + t + nonce
@@ -179,15 +179,13 @@ export class SwitchBotOpenAPI extends EventEmitter {
       .update(Buffer.from(data, 'utf-8'))
       .digest()
     const sign = signTerm.toString('base64')
-    const amzDate = new Date().toISOString().replace(/[:-]|\.\d{3}/g, '')
 
     return {
-      'Authorization': `Credential=${this.token}, Signature=${sign}, SignedHeaders=content-type;host;x-amz-date, SignedHeaders=content-type;host;x-amz-date`,
+      'Authorization': this.token,
       'sign': sign,
       'nonce': nonce,
       't': t,
       'Content-Type': 'application/json',
-      'X-Amz-Date': amzDate,
     }
   }
 
