@@ -116,7 +116,7 @@ export enum SwitchBotBLEModel {
   CeilingLight = 'q', // Currently only available in Japan.
   CeilingLightPro = 'n', // Currently only available in Japan.
   BlindTilt = 'x',
-  Leak = '3',
+  Leak = '&',
   Keypad = 'y',
   RelaySwitch1 = ';',
   RelaySwitch1PM = '<',
