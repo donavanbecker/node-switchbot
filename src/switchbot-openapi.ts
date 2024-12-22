@@ -70,6 +70,7 @@ export class SwitchBotOpenAPI extends EventEmitter {
     super()
     this.token = token
     this.secret = secret
+    this.emitLog('info', `Token: ${token}, Secret: ${secret}`)
     this.baseURL = urls.baseURL
 
     if (hostname) {
@@ -93,9 +94,11 @@ export class SwitchBotOpenAPI extends EventEmitter {
    * @returns {Promise<{ response: body, statusCode: number }>} A promise that resolves to an object containing the API response.
    * @throws {Error} Throws an error if the request to get devices fails.
    */
-  async getDevices(): Promise<{ response: devices, statusCode: number }> {
+  async getDevices(token?: string, secret?: string): Promise<{ response: devices, statusCode: number }> {
     try {
-      const { body, statusCode } = await request(urls.devicesURL, { headers: this.generateHeaders() })
+      const configToken = token || this.token
+      const configSecret = secret || this.secret
+      const { body, statusCode } = await request(urls.devicesURL, { headers: this.generateHeaders(configToken, configSecret) })
       const response = await body.json() as devices
       this.emitLog('debug', `Got devices: ${JSON.stringify(response)}`)
       this.emitLog('debug', `statusCode: ${statusCode}`)
@@ -116,11 +119,13 @@ export class SwitchBotOpenAPI extends EventEmitter {
    * @returns {Promise<{ response: pushResponse['body'], statusCode: pushResponse['statusCode'] }>} A promise that resolves to an object containing the API response.
    * @throws An error if the device control fails.
    */
-  async controlDevice(deviceId: string, command: string, parameter: string, commandType: string = 'command'): Promise<{ response: pushResponse['body'], statusCode: pushResponse['statusCode'] }> {
+  async controlDevice(deviceId: string, command: string, parameter: string, commandType: string = 'command', token?: string, secret?: string): Promise<{ response: pushResponse['body'], statusCode: pushResponse['statusCode'] }> {
     try {
+      const configToken = token || this.token
+      const configSecret = secret || this.secret
       const { body, statusCode } = await request(`${this.baseURL}/devices/${deviceId}/commands`, {
         method: 'POST',
-        headers: this.generateHeaders(),
+        headers: this.generateHeaders(configToken, configSecret),
         body: JSON.stringify({
           command,
           parameter,
@@ -144,11 +149,13 @@ export class SwitchBotOpenAPI extends EventEmitter {
    * @returns {Promise<{ response: deviceStatus, statusCode: deviceStatusRequest['statusCode'] }>} A promise that resolves to the device status.
    * @throws An error if the request fails.
    */
-  async getDeviceStatus(deviceId: string): Promise<{ response: deviceStatus, statusCode: deviceStatusRequest['statusCode'] }> {
+  async getDeviceStatus(deviceId: string, token?: string, secret?: string): Promise<{ response: deviceStatus, statusCode: deviceStatusRequest['statusCode'] }> {
     try {
+      const configToken = token || this.token
+      const configSecret = secret || this.secret
       const { body, statusCode } = await request(`${this.baseURL}/devices/${deviceId}/status`, {
         method: 'GET',
-        headers: this.generateHeaders(),
+        headers: this.generateHeaders(configToken, configSecret),
       })
       const response = await body.json() as deviceStatus
       this.emitLog('debug', `Got device status: ${deviceId}`)
@@ -170,18 +177,18 @@ export class SwitchBotOpenAPI extends EventEmitter {
    * - `t`: The current timestamp in milliseconds since the Unix epoch.
    * - `Content-Type`: The content type of the request, set to `application/json`.
    */
-  private generateHeaders = (): { 'Authorization': string, 'sign': string, 'nonce': `${string}-${string}-${string}-${string}-${string}`, 't': string, 'Content-Type': string } => {
+  private generateHeaders = (configToken: string, configSecret: string): { 'Authorization': string, 'sign': string, 'nonce': `${string}-${string}-${string}-${string}-${string}`, 't': string, 'Content-Type': string } => {
     const t = `${Date.now()}`
     const nonce = randomUUID()
-    const data = this.token + t + nonce
+    const data = configToken + t + nonce
     const signTerm = crypto
-      .createHmac('sha256', this.secret)
+      .createHmac('sha256', configSecret)
       .update(Buffer.from(data, 'utf-8'))
       .digest()
     const sign = signTerm.toString('base64')
 
     return {
-      'Authorization': this.token,
+      'Authorization': configToken,
       'sign': sign,
       'nonce': nonce,
       't': t,
@@ -203,7 +210,7 @@ export class SwitchBotOpenAPI extends EventEmitter {
    *
    * @throws Will log an error if any step in the webhook setup process fails.
    */
-  async setupWebhook(url: string): Promise<void> {
+  async setupWebhook(url: string, token?: string, secret?: string): Promise<void> {
     try {
       const xurl = new URL(url)
       const port = Number(xurl.port)
@@ -237,9 +244,11 @@ export class SwitchBotOpenAPI extends EventEmitter {
     }
 
     try {
+      const configToken = token || this.token
+      const configSecret = secret || this.secret
       const { body, statusCode } = await request(urls.setupWebhook, {
         method: 'POST',
-        headers: this.generateHeaders(),
+        headers: this.generateHeaders(configToken, configSecret),
         body: JSON.stringify({
           action: 'setupWebhook',
           url,
@@ -256,9 +265,11 @@ export class SwitchBotOpenAPI extends EventEmitter {
     }
 
     try {
+      const configToken = token || this.token
+      const configSecret = secret || this.secret
       const { body, statusCode } = await request(urls.updateWebhook, {
         method: 'POST',
-        headers: this.generateHeaders(),
+        headers: this.generateHeaders(configToken, configSecret),
         body: JSON.stringify({
           action: 'updateWebhook',
           config: {
@@ -277,9 +288,11 @@ export class SwitchBotOpenAPI extends EventEmitter {
     }
 
     try {
+      const configToken = token || this.token
+      const configSecret = secret || this.secret
       const { body, statusCode } = await request(urls.queryWebhook, {
         method: 'POST',
-        headers: this.generateHeaders(),
+        headers: this.generateHeaders(configToken, configSecret),
         body: JSON.stringify({
           action: 'queryUrl',
         }),
@@ -304,11 +317,13 @@ export class SwitchBotOpenAPI extends EventEmitter {
    *
    * @throws Will log an error if the deletion fails.
    */
-  async deleteWebhook(url: string): Promise<void> {
+  async deleteWebhook(url: string, token?: string, secret?: string): Promise<void> {
     try {
+      const configToken = token || this.token
+      const configSecret = secret || this.secret
       const { body, statusCode } = await request(urls.deleteWebhook, {
         method: 'POST',
-        headers: this.generateHeaders(),
+        headers: this.generateHeaders(configToken, configSecret),
         body: JSON.stringify({
           action: 'deleteWebhook',
           url,
