@@ -126,7 +126,7 @@ export class SwitchBotOpenAPI extends EventEmitter {
     try {
       const configToken = token || this.token
       const configSecret = secret || this.secret
-      const { body, statusCode } = await request(`${this.baseURL}/devices/${deviceId}/commands`, {
+      const { body, statusCode } = await request(`${urls.devicesURL}/${deviceId}/commands`, {
         method: 'POST',
         headers: this.generateHeaders(configToken, configSecret),
         body: JSON.stringify({
@@ -158,10 +158,7 @@ export class SwitchBotOpenAPI extends EventEmitter {
     try {
       const configToken = token || this.token
       const configSecret = secret || this.secret
-      const { body, statusCode } = await request(`${this.baseURL}/devices/${deviceId}/status`, {
-        method: 'GET',
-        headers: this.generateHeaders(configToken, configSecret),
-      })
+      const { body, statusCode } = await request(`${urls.devicesURL}/${deviceId}/status`, { headers: this.generateHeaders(configToken, configSecret) })
       const response = await body.json() as deviceStatus
       this.emitLog('debug', `Got device status: ${deviceId}`)
       this.emitLog('debug', `statusCode: ${statusCode}`)
