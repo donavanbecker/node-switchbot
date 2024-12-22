@@ -90,7 +90,8 @@ export class SwitchBotOpenAPI extends EventEmitter {
 
   /**
    * Retrieves the list of devices from the SwitchBot OpenAPI.
-   *
+   * @param token - (Optional) The token used for authentication. If not provided, the instance token will be used.
+   * @param secret - (Optional) The secret used for authentication. If not provided, the instance secret will be used.
    * @returns {Promise<{ response: body, statusCode: number }>} A promise that resolves to an object containing the API response.
    * @throws {Error} Throws an error if the request to get devices fails.
    */
@@ -112,11 +113,13 @@ export class SwitchBotOpenAPI extends EventEmitter {
   /**
    * Controls a device by sending a command to the SwitchBot API.
    *
-   * @param deviceId - The unique identifier of the device to control.
+   * @param deviceId - The ID of the device to control.
    * @param command - The command to send to the device.
    * @param parameter - The parameter for the command.
-   * @param commandType - The type of the command, defaults to 'command'.
-   * @returns {Promise<{ response: pushResponse['body'], statusCode: pushResponse['statusCode'] }>} A promise that resolves to an object containing the API response.
+   * @param commandType - The type of the command (default is 'command').
+   * @param token - (Optional) The token used for authentication. If not provided, the instance token will be used.
+   * @param secret - (Optional) The secret used for authentication. If not provided, the instance secret will be used.
+   * @returns A promise that resolves to an object containing the response body and status code.
    * @throws An error if the device control fails.
    */
   async controlDevice(deviceId: string, command: string, parameter: string, commandType: string = 'command', token?: string, secret?: string): Promise<{ response: pushResponse['body'], statusCode: pushResponse['statusCode'] }> {
@@ -146,7 +149,9 @@ export class SwitchBotOpenAPI extends EventEmitter {
    * Retrieves the status of a specific device.
    *
    * @param deviceId - The unique identifier of the device.
-   * @returns {Promise<{ response: deviceStatus, statusCode: deviceStatusRequest['statusCode'] }>} A promise that resolves to the device status.
+   * @param token - (Optional) The token used for authentication. If not provided, the instance token will be used.
+   * @param secret - (Optional) The secret used for authentication. If not provided, the instance secret will be used.
+   * @returns A promise that resolves to an object containing the device status and the status code of the request.
    * @throws An error if the request fails.
    */
   async getDeviceStatus(deviceId: string, token?: string, secret?: string): Promise<{ response: deviceStatus, statusCode: deviceStatusRequest['statusCode'] }> {
@@ -170,22 +175,23 @@ export class SwitchBotOpenAPI extends EventEmitter {
   /**
    * Generates the headers required for authentication with the SwitchBot OpenAPI.
    *
-   * @returns An object containing the following headers:
-   * - `Authorization`: The token used for authorization.
-   * - `sign`: The HMAC-SHA256 signature of the concatenated token, timestamp, and nonce.
-   * - `nonce`: A unique identifier for the request, formatted as a UUID.
-   * - `t`: The current timestamp in milliseconds since the Unix epoch.
-   * - `Content-Type`: The content type of the request, set to `application/json`.
+   * @param configToken - The token used for authorization.
+   * @param configSecret - The secret key used to sign the request.
+   * @returns An object containing the necessary headers:
+   * - `Authorization`: The authorization token.
+   * - `sign`: The HMAC-SHA256 signature of the token, timestamp, and nonce.
+   * - `nonce`: A unique identifier for the request.
+   * - `t`: The current timestamp in milliseconds.
+   * - `Content-Type`: The content type of the request, set to 'application/json'.
    */
-  private generateHeaders = (configToken: string, configSecret: string): { 'Authorization': string, 'sign': string, 'nonce': `${string}-${string}-${string}-${string}-${string}`, 't': string, 'Content-Type': string } => {
+  private generateHeaders = (configToken: string, configSecret: string): { 'Authorization': string, 'sign': string, 'nonce': string, 't': string, 'Content-Type': string } => {
     const t = `${Date.now()}`
     const nonce = randomUUID()
     const data = configToken + t + nonce
-    const signTerm = crypto
+    const sign = crypto
       .createHmac('sha256', configSecret)
-      .update(Buffer.from(data, 'utf-8'))
-      .digest()
-    const sign = signTerm.toString('base64')
+      .update(data)
+      .digest('base64')
 
     return {
       'Authorization': configToken,
@@ -206,6 +212,8 @@ export class SwitchBotOpenAPI extends EventEmitter {
    * 4. Sends a request to query the current webhook URL.
    *
    * @param url - The URL to which the webhook events will be sent.
+   * @param token - (Optional) The token used for authentication. If not provided, the instance token will be used.
+   * @param secret - (Optional) The secret used for authentication. If not provided, the instance secret will be used.
    * @returns A promise that resolves when the webhook setup is complete.
    *
    * @throws Will log an error if any step in the webhook setup process fails.
@@ -313,6 +321,8 @@ export class SwitchBotOpenAPI extends EventEmitter {
    * Deletes a webhook by sending a request to the specified URL.
    *
    * @param url - The URL of the webhook to be deleted.
+   * @param token - (Optional) The token used for authentication. If not provided, the instance token will be used.
+   * @param secret - (Optional) The secret used for authentication. If not provided, the instance secret will be used.
    * @returns A promise that resolves when the webhook is successfully deleted.
    *
    * @throws Will log an error if the deletion fails.
