@@ -88,6 +88,7 @@ export enum SwitchBotModel {
   PanTiltCam2K = 'W3101100',
   BlindTilt = 'W2701600',
   BatteryCirculatorFan = 'W3800510',
+  CirculatorFan = 'W3800511',
   WaterDetector = 'W4402000',
   Unknown = 'Unknown',
 }
@@ -167,6 +168,8 @@ export enum SwitchBotBLEModelFriendlyName {
   MeterPlus = 'Meter Plus',
   MeterPro = 'Meter Pro',
   MeterProCO2 = 'Meter Pro CO2',
+  BatteryCirculatorFan = 'Battery Circulator Fan',
+  CirculatorFan = 'Circulator Fan',
   OutdoorMeter = 'Outdoor Meter',
   ContactSensor = 'Contact Sensor',
   MotionSensor = 'Motion Sensor',

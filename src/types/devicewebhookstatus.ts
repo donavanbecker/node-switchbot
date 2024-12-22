@@ -77,10 +77,12 @@ export type curtain3WebhookContext = deviceWebhookContext & {
 
 export type motionSensorWebhookContext = deviceWebhookContext & {
   detectionState: 'NOT_DETECTED' | 'DETECTED'
+  battery: number // 0~100
 }
 
 export type contactSensorWebhookContext = deviceWebhookContext & {
   detectionState: 'NOT_DETECTED' | 'DETECTED'
+  battery: number // 0~100
   doorMode: 'IN_DOOR' | 'OUT_DOOR'
   brightness: 'dim' | 'bright'
   openState: 'open' | 'close' | 'timeOutNotClose'
@@ -93,41 +95,48 @@ export type waterLeakDetectorWebhookContext = deviceWebhookContext & {
 
 export type meterWebhookContext = deviceWebhookContext & {
   temperature: number
+  battery: number // 0~100
   scale: 'CELSIUS' | 'FAHRENHEIT'
   humidity: number
 }
 
 export type meterPlusWebhookContext = deviceWebhookContext & {
   temperature: number
+  battery: number // 0~100
   scale: 'CELSIUS' | 'FAHRENHEIT'
   humidity: number
 }
 
 export type meterProWebhookContext = deviceWebhookContext & {
   temperature: number
+  battery: number // 0~100
   scale: 'CELSIUS' | 'FAHRENHEIT'
   humidity: number
 }
 
 export type meterProCO2WebhookContext = deviceWebhookContext & {
   temperature: number
+  battery: number // 0~100
   scale: 'CELSIUS' | 'FAHRENHEIT'
   humidity: number
-  co2: number
+  CO2: number
 }
 
 export type outdoorMeterWebhookContext = deviceWebhookContext & {
   temperature: number
+  battery: number // 0~100
   scale: 'CELSIUS' | 'FAHRENHEIT'
   humidity: number
 }
 
 export type lockWebhookContext = deviceWebhookContext & {
   lockState: 'UNLOCKED' | 'LOCKED' | 'JAMMED'
+  battery: number // 0~100
 }
 
 export type lockProWebhookContext = deviceWebhookContext & {
   lockState: 'UNLOCKED' | 'LOCKED' | 'JAMMED'
+  battery: number // 0~100
 }
 
 export type indoorCameraWebhookContext = deviceWebhookContext & {
@@ -223,6 +232,17 @@ export type batteryCirculatorFanWebhookContext = deviceWebhookContext & {
   oscillation: 'on' | 'off'
   verticalOscillation: 'on' | 'off'
   chargingStatus: 'charging' | 'uncharged'
+  fanSpeed: number // 1~100
+}
+
+export type circulatorFanWebhookContext = deviceWebhookContext & {
+  mode: 'direct' | 'natural' | 'sleep' | 'baby'
+  version: string
+  battery: number
+  powerState: 'ON' | 'OFF'
+  nightStatus: 'off' | 1 | 2
+  oscillation: 'on' | 'off'
+  verticalOscillation: 'on' | 'off'
   fanSpeed: number // 1~100
 }
 
